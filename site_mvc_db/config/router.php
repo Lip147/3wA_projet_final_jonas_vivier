@@ -12,6 +12,10 @@ return [
         'action' => function() { logout(); }
     ],
     '' => [
+        'controller' => '../app/controllers/arcmController.php',
+        'action' => function() { arcm(); }
+    ],
+    'home' => [
         'controller' => '../app/controllers/homeController.php',
         'action' => function() { home(); }
     ],
