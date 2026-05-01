@@ -7,7 +7,8 @@
     <style>
         body { background: #f5f4f4; margin: 0; font-family: serif; }
         .header { display: flex; justify-content: space-between; align-items: flex-start; padding: 2rem 4rem 0 4rem; }
-        .logo { font-size: 1.1rem; }
+        .logo { color: #111; font-size: 1.1rem; text-decoration: none; }
+        .logo:hover { color: #888; }
         .nav { display: flex; gap: 2rem; }
         .nav a { color: #111; text-decoration: none; font-size: 1rem; }
         .main-menu { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh; }
@@ -17,9 +18,9 @@
 </head>
 <body>
     <div class="header">
-        <div class="logo">ARCM</div>
+        <a class="logo" href="/site_mvc_db/public/arcm">ARCM</a>
         <nav class="nav">
-            <a href="/site_mvc_db/public/">Accueil</a>
+            <a href="/site_mvc_db/public/home">Accueil</a>
             <a href="/site_mvc_db/public/galerie">Galerie photo</a>
             <a href="/site_mvc_db/public/contact">Contact</a>
         </nav>
