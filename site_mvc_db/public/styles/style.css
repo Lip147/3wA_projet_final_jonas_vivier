@@ -3,3 +3,174 @@ body{background:black;color:white;}
 .card{position:relative;}
 .overlay{position:absolute;inset:0;background:rgba(255,200,0,0.9);opacity:0;transition:.3s;}
 .card:hover .overlay{opacity:1;}
+
+.gallery-page {
+    min-height: 100vh;
+    margin: 0;
+    background: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.gallery-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: min(100% - 6rem, 1440px);
+    margin: 0 auto;
+    padding: 3.5rem 0 4.75rem;
+}
+
+.gallery-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border: 1px solid #2d2d2d;
+    color: #fff;
+    text-decoration: none;
+}
+
+.gallery-logo::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: #fff;
+}
+
+.gallery-navlinks {
+    display: flex;
+    align-items: center;
+    gap: 1.7rem;
+}
+
+.gallery-navlinks a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.gallery-navlinks a:hover,
+.gallery-navlinks a.is-active {
+    text-decoration: underline;
+    text-underline-offset: 0.65rem;
+}
+
+.gallery-placeholder {
+    width: min(100% - 6rem, 1440px);
+    margin: 0 auto;
+    padding: 4rem 0;
+}
+
+.gallery-placeholder h1 {
+    margin: 0 0 1rem;
+    font-size: clamp(3rem, 8vw, 8rem);
+    font-weight: 400;
+}
+
+.gallery-placeholder p {
+    max-width: 38rem;
+    color: #aaa;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.contact-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1fr);
+    gap: 4rem;
+    width: min(100% - 6rem, 1180px);
+    margin: 0 auto;
+    padding: 2rem 0 6rem;
+}
+
+.contact-intro h1 {
+    margin: 0 0 1rem;
+    font-size: clamp(3rem, 8vw, 8rem);
+    font-weight: 400;
+    line-height: 0.95;
+}
+
+.contact-intro p {
+    max-width: 32rem;
+    color: #aaa;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.contact-form {
+    display: grid;
+    gap: 1.1rem;
+}
+
+.contact-form label {
+    display: grid;
+    gap: 0.5rem;
+    color: #d8d8d8;
+    font-size: 0.95rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    border: 1px solid #303030;
+    background: #050505;
+    color: #fff;
+    padding: 1rem;
+    font: inherit;
+}
+
+.contact-form textarea {
+    min-height: 170px;
+    resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #fff;
+    outline: none;
+}
+
+.contact-form button {
+    justify-self: start;
+    border: 1px solid #fff;
+    background: #fff;
+    color: #000;
+    padding: 1rem 1.4rem;
+    font: inherit;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    background: #000;
+    color: #fff;
+}
+
+@media (max-width: 800px) {
+    .gallery-navbar {
+        align-items: flex-start;
+        width: min(100% - 2rem, 1440px);
+        padding: 2rem 0 3rem;
+    }
+
+    .gallery-navlinks {
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .gallery-placeholder {
+        width: min(100% - 2rem, 1440px);
+        padding: 2rem 0;
+    }
+
+    .contact-layout {
+        grid-template-columns: 1fr;
+        width: min(100% - 2rem, 1180px);
+        gap: 2rem;
+        padding: 1rem 0 4rem;
+    }
+}

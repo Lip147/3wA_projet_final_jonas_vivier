@@ -3,8 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Peintures</title>
+	<link rel="stylesheet" href="/site_mvc_db/public/styles/style.css">
 	<style>
-		body { background: #000; color: #fff; margin: 0; font-family: Arial, sans-serif; }
 		.gallery-grid {
 			display: grid;
 			grid-template-columns: repeat(4, 1fr);
@@ -63,12 +63,15 @@
 		}
 	</style>
 </head>
-<body>
-	<nav style="background:#111;padding:1rem 2rem;display:flex;gap:2rem;align-items:center;">
-		<a href="/site_mvc_db/public/" style="color:#fff;text-decoration:none;font-weight:bold;">Accueil</a>
-		<a href="/site_mvc_db/public/peinture" style="color:#fff;text-decoration:none;font-weight:bold;">Peinture</a>
-		<a href="/site_mvc_db/public/biographie" style="color:#fff;text-decoration:none;font-weight:bold;">Biographie</a>
-		<a href="/site_mvc_db/public/contact" style="color:#fff;text-decoration:none;font-weight:bold;">Contact</a>
+<body class="gallery-page">
+	<nav class="gallery-navbar">
+		<a class="gallery-logo" href="/site_mvc_db/public/home" aria-label="Accueil"></a>
+		<div class="gallery-navlinks">
+			<a class="is-active" href="/site_mvc_db/public/peinture">Peintures</a>
+			<a href="/site_mvc_db/public/couture">Coutures</a>
+			<a href="/site_mvc_db/public/expositions">&Eacute;venements</a>
+			<a href="/site_mvc_db/public/contact">Contact</a>
+		</div>
 	</nav>
 	<div style="background:#000;padding:2rem 3rem;border-bottom:1px solid #333;">
 		<div style="max-width:1200px;margin:0 auto;display:flex;gap:1rem;flex-wrap:wrap;">
