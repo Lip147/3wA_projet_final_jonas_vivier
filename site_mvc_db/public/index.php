@@ -1,5 +1,6 @@
 <?php
 session_start();
+header('Content-Type: text/html; charset=UTF-8');
 
 // Détecte le chemin du dossier public
 $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);

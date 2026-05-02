@@ -9,6 +9,7 @@
     <nav class="gallery-navbar">
         <a class="gallery-logo" href="/site_mvc_db/public/home" aria-label="Accueil"></a>
         <div class="gallery-navlinks">
+            <a href="/site_mvc_db/public/home">Accueil</a>
             <a href="/site_mvc_db/public/peinture">Peintures</a>
             <a href="/site_mvc_db/public/couture">Coutures</a>
             <a href="/site_mvc_db/public/expositions">&Eacute;venements</a>
@@ -18,7 +19,7 @@
     <main class="contact-layout">
         <section class="contact-intro">
             <h1>Contact</h1>
-            <p>Formulaire temporaire pour preparer la future prise de contact.</p>
+            <p>Formulaire temporaire pour préparer la future prise de contact.</p>
         </section>
         <form class="contact-form" action="#" method="post">
             <label>
@@ -26,7 +27,7 @@
                 <input type="text" name="name" placeholder="Votre nom">
             </label>
             <label>
-                Email
+                E-mail
                 <input type="email" name="email" placeholder="votre@email.com">
             </label>
             <label>
@@ -40,5 +41,6 @@
             <button type="button">Envoyer</button>
         </form>
     </main>
+    <?php require __DIR__ . '/partials/legal_footer.php'; ?>
 </body>
 </html>

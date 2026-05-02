@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Connexion Admin</title>
+    <title>Connexion admin</title>
     <style>
         body { background: #f5f5f5; font-family: Arial, sans-serif; }
         .login-box { max-width: 350px; margin: 6rem auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 2rem; }
@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="login-box">
-        <h1>Connexion Admin</h1>
+        <h1>Connexion admin</h1>
         <?php if (!empty($error)): ?>
             <div class="error"><?php echo $error; ?></div>
         <?php endif; ?>
@@ -26,5 +26,6 @@
             <button type="submit">Se connecter</button>
         </form>
     </div>
+    <?php require __DIR__ . '/partials/legal_footer.php'; ?>
 </body>
 </html>
