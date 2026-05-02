@@ -35,6 +35,7 @@
             font-weight: 400;
             line-height: 0.95;
             text-align: center;
+            transform: translateY(-4rem);
         }
 
         .arcm-enter {
