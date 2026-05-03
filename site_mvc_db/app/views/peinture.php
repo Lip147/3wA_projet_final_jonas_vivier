@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="/site_mvc_db/public/styles/style.css">
 	<style>
 		.paintings-layout {
+			box-sizing: border-box;
 			display: grid;
 			grid-template-columns: minmax(220px, 270px) minmax(0, 1fr);
 			gap: 2.75rem;
@@ -82,59 +83,78 @@
 			display: grid;
 			grid-template-columns: repeat(4, minmax(0, 1fr));
 			gap: 2rem;
+			align-content: start;
+			box-sizing: border-box;
+			padding-bottom: 2rem;
 			background: #000;
 		}
 		.gallery-card {
 			position: relative;
-			overflow: hidden;
+			overflow: visible;
 			border-radius: 8px;
-			box-shadow: 0 2px 16px rgba(0,0,0,0.5);
 			cursor: pointer;
 			aspect-ratio: 1 / 1;
 			background: #111;
 		}
+		.gallery-card:hover {
+			z-index: 50;
+		}
 		.gallery-card img {
+			position: relative;
+			z-index: 4;
 			width: 100%;
 			height: 100%;
 			object-fit: cover;
 			display: block;
+			border-radius: 8px;
 			transition: filter 0.3s;
 		}
 		.gallery-card .hover-info {
 			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background: #ffc400;
-			color: #222;
+			inset: -5rem -1.6rem -8.5rem;
+			background: var(--hover-color, #ffc400);
+			color: #fff;
 			opacity: 0;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			padding: 2rem 1rem 1rem;
-			transition: opacity 0.3s;
+			pointer-events: none;
+			transition: opacity 0.2s ease;
 			z-index: 2;
 		}
 		.gallery-card:hover .hover-info {
 			opacity: 1;
 		}
 		.gallery-card:hover img {
-			filter: blur(2px) brightness(0.7);
+			filter: none;
 		}
-		.hover-info h2 {
-			margin: 0 0 1rem;
-			font-size: 1.5rem;
-		}
-		.hover-info p {
-			margin: 0.2rem 0;
-			font-size: 1rem;
-		}
-		.hover-info .meta {
-			margin-top: 1.5rem;
+		.hover-info__top,
+		.hover-info__bottom {
+			position: absolute;
+			left: 1rem;
+			right: 1rem;
+			z-index: 5;
+			display: flex;
+			justify-content: space-between;
+			gap: 1rem;
 			font-size: 0.95rem;
-			color: #444;
+			line-height: 1.2;
+		}
+		.hover-info__top {
+			top: 2.4rem;
+			align-items: flex-start;
+		}
+		.hover-info__bottom {
+			bottom: 2.6rem;
+			align-items: flex-end;
+		}
+		.hover-info__title {
+			max-width: 58%;
+			max-height: 4.8rem;
+			overflow: hidden;
+			font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+			line-height: 1.15;
+		}
+		.hover-info__meta {
+			max-width: 38%;
+			text-align: right;
 		}
 		.gallery-empty {
 			grid-column: 1 / -1;
@@ -154,6 +174,7 @@
 			}
 			.gallery-grid {
 				grid-template-columns: repeat(2, minmax(0, 1fr));
+				padding-bottom: 2rem;
 			}
 		}
 		@media (max-width: 540px) {
@@ -171,6 +192,7 @@
 			<a class="is-active" href="/site_mvc_db/public/peinture">Peintures</a>
 			<a href="/site_mvc_db/public/couture">Coutures</a>
 			<a href="/site_mvc_db/public/expositions">&Eacute;venements</a>
+			<a href="/site_mvc_db/public/biographie">Biographie</a>
 			<a href="/site_mvc_db/public/contact">Contact</a>
 		</div>
 	</nav>
@@ -205,19 +227,20 @@
 			<?php if (empty($peintures)): ?>
 			<p class="gallery-empty">Aucune peinture trouvée.</p>
 			<?php else: ?>
-			<?php foreach ($peintures as $p): ?>
-			<div class="gallery-card">
+			<?php
+			$hoverColors = ['#ffc400', '#00a6ff', '#ff4d6d', '#32c46c', '#8f5cff', '#ff7a00'];
+			?>
+			<?php foreach ($peintures as $index => $p): ?>
+			<div class="gallery-card" style="--hover-color: <?php echo $hoverColors[$index % count($hoverColors)]; ?>;">
 				<img src="<?php echo $p['image']; ?>" alt="<?php echo htmlspecialchars($p['title']); ?>">
 				<div class="hover-info">
-					<div style="align-self: flex-start; font-size: 1rem; margin-bottom: 0.5rem;">
-						<?php echo htmlspecialchars($p['description']); ?>
+					<div class="hover-info__top">
+						<span><?php echo htmlspecialchars($p['title']); ?></span>
+						<span><?php echo htmlspecialchars($p['date']); ?></span>
 					</div>
-					<div style="align-self: flex-end; font-size: 0.95rem; margin-bottom: 0.5rem;">
-						<?php echo htmlspecialchars($p['date']); ?>
-					</div>
-					<h2><?php echo htmlspecialchars($p['title']); ?></h2>
-					<div class="meta" style="align-self: flex-end; text-align: right;">
-						<?php echo htmlspecialchars($p['meta']); ?>
+					<div class="hover-info__bottom">
+						<strong class="hover-info__title"><?php echo htmlspecialchars($p['description']); ?></strong>
+						<span class="hover-info__meta"><?php echo htmlspecialchars($p['meta']); ?></span>
 					</div>
 				</div>
 			</div>

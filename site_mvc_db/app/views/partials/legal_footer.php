@@ -2,7 +2,7 @@
     .site-footer {
         box-sizing: border-box;
         width: 100%;
-        margin-top: 4rem;
+        margin-top: auto;
         padding: 2.5rem max(1.5rem, calc((100% - 1440px) / 2));
         border-top: 1px solid #333;
         background: #050505;

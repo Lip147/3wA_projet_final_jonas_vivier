@@ -14,6 +14,7 @@
         .actions { text-align: center; }
         form { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
         form input, form textarea { flex: 1 1 150px; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
+        form input[type="file"] { background: #fafafa; }
         form button { padding: 0.5rem 1.5rem; background: #222; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
         form button:hover { background: #444; }
         .nav { margin-bottom: 2rem; display: flex; gap: 1rem; justify-content: space-between; }
@@ -34,9 +35,10 @@
             <a href="/site_mvc_db/public/logout" style="color:#c00;">Déconnexion</a>
         </div>
         <h1>Administration des coutures</h1>
-        <form method="post" action="/site_mvc_db/public/admin/coutures/add">
+        <form method="post" action="/site_mvc_db/public/admin/coutures/add" enctype="multipart/form-data">
             <input type="text" name="title" placeholder="Titre" required>
-            <input type="text" name="image" placeholder="URL de l'image" required>
+            <input type="text" name="image" placeholder="URL ou chemin de l'image">
+            <input type="file" name="image_file" accept="image/*">
             <input type="text" name="description" placeholder="Description">
             <input type="text" name="date" placeholder="Date">
             <input type="text" name="meta" placeholder="Méta (ex. : catégorie)">
@@ -58,10 +60,11 @@
             }
             ?>
             <?php if ($editCouture): ?>
-            <form method="post" action="/site_mvc_db/public/admin/coutures/update">
+            <form method="post" action="/site_mvc_db/public/admin/coutures/update" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?php echo $editCouture['id']; ?>">
                 <input type="text" name="title" placeholder="Titre" value="<?php echo htmlspecialchars($editCouture['title']); ?>" required>
-                <input type="text" name="image" placeholder="URL de l'image" value="<?php echo htmlspecialchars($editCouture['image']); ?>" required>
+                <input type="text" name="image" placeholder="URL ou chemin de l'image" value="<?php echo htmlspecialchars($editCouture['image']); ?>">
+                <input type="file" name="image_file" accept="image/*">
                 <input type="text" name="description" placeholder="Description" value="<?php echo htmlspecialchars($editCouture['description']); ?>">
                 <input type="text" name="date" placeholder="Date" value="<?php echo htmlspecialchars($editCouture['date']); ?>">
                 <input type="text" name="meta" placeholder="Méta (ex. : catégorie)" value="<?php echo htmlspecialchars($editCouture['meta']); ?>">

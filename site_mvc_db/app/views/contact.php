@@ -13,6 +13,7 @@
             <a href="/site_mvc_db/public/peinture">Peintures</a>
             <a href="/site_mvc_db/public/couture">Coutures</a>
             <a href="/site_mvc_db/public/expositions">&Eacute;venements</a>
+            <a href="/site_mvc_db/public/biographie">Biographie</a>
             <a class="is-active" href="/site_mvc_db/public/contact">Contact</a>
         </div>
     </nav>

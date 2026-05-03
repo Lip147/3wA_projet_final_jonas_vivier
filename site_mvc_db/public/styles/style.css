@@ -5,6 +5,8 @@ body{background:black;color:white;}
 .card:hover .overlay{opacity:1;}
 
 .gallery-page {
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
     margin: 0;
     background: #000;
@@ -15,7 +17,7 @@ body{background:black;color:white;}
 .gallery-navbar {
     position: sticky;
     top: 0;
-    z-index: 20;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -153,6 +155,10 @@ body{background:black;color:white;}
 .contact-form button:hover {
     background: #000;
     color: #fff;
+}
+
+.site-footer {
+    margin-top: auto;
 }
 
 @media (max-width: 800px) {

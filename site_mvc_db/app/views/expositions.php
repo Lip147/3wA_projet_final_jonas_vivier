@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="/site_mvc_db/public/styles/style.css">
     <style>
         .events-page {
-            background: #f7f7f5;
-            color: #000;
+            background: #000;
+            color: #fff;
             min-height: calc(100vh - 8rem);
             padding: 5rem 0 6rem;
         }
@@ -24,7 +24,7 @@
 
         .events-header h1 {
             margin: 0;
-            color: #000;
+            color: #fff;
             font-size: clamp(2.6rem, 6vw, 5rem);
             font-weight: 400;
             line-height: 0.95;
@@ -41,8 +41,8 @@
             gap: 3rem;
             align-items: center;
             min-height: 210px;
-            border: 4px solid #000;
-            background: #fff;
+            border: 4px solid #fff;
+            background: #000;
             padding: 1.5rem 2rem;
         }
 
@@ -70,9 +70,9 @@
         .event-date,
         .event-description,
         .event-meta {
-            border: 4px solid #000;
-            background: #fff;
-            color: #000;
+            border: 4px solid #fff;
+            background: #000;
+            color: #fff;
         }
 
         .event-title {
@@ -113,14 +113,14 @@
             width: fit-content;
             max-width: 100%;
             padding: 0.15rem 0.6rem;
-            color: #333;
+            color: #fff;
             font-size: 0.95rem;
         }
 
         .event-media {
             align-self: stretch;
             min-height: 170px;
-            border: 4px solid #000;
+            border: 4px solid #fff;
             overflow: hidden;
         }
 
@@ -137,15 +137,15 @@
             place-items: center;
             height: 100%;
             min-height: 170px;
-            color: #000;
+            color: #fff;
             font-size: 1.4rem;
         }
 
         .events-empty {
             margin: 0;
-            border: 4px solid #000;
-            background: #fff;
-            color: #000;
+            border: 4px solid #fff;
+            background: #000;
+            color: #fff;
             padding: 2rem;
             text-align: center;
         }
@@ -186,6 +186,7 @@
             <a href="/site_mvc_db/public/peinture">Peintures</a>
             <a href="/site_mvc_db/public/couture">Coutures</a>
             <a class="is-active" href="/site_mvc_db/public/expositions">&Eacute;v&eacute;nements</a>
+            <a href="/site_mvc_db/public/biographie">Biographie</a>
             <a href="/site_mvc_db/public/contact">Contact</a>
         </div>
     </nav>

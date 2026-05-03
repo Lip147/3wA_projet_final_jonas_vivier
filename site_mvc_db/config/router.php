@@ -42,6 +42,10 @@ return [
         'controller' => '../app/controllers/galerieController.php',
         'action' => function() { galerie(); }
     ],
+    'biographie' => [
+        'controller' => '../app/controllers/biographieController.php',
+        'action' => function() { biographie(); }
+    ],
     'contact' => [
         'controller' => '../app/controllers/contactController.php',
         'action' => function() { contact(); }

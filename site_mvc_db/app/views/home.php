@@ -55,10 +55,7 @@
     <div class="header">
         <a class="logo" href="/site_mvc_db/public/arcm">ARCM</a>
         <nav class="nav">
-            <a class="is-active" href="/site_mvc_db/public/home">Accueil</a>
-            <a href="/site_mvc_db/public/peinture">Peintures</a>
-            <a href="/site_mvc_db/public/couture">Coutures</a>
-            <a href="/site_mvc_db/public/expositions">&Eacute;venements</a>
+            <a href="/site_mvc_db/public/biographie">Biographie</a>
             <a href="/site_mvc_db/public/contact">Contact</a>
         </nav>
     </div>
