@@ -40,7 +40,9 @@
         }
         .filter-form input,
         .filter-form select {
+            box-sizing: border-box;
             width: 100%;
+            min-height: 44px;
             border: 1px solid #111;
             background: #fff;
             color: #000;
@@ -59,9 +61,11 @@
         }
         .filter-actions button,
         .filter-actions a {
+            box-sizing: border-box;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            width: 100%;
             min-height: 44px;
             border: 1px solid #000;
             background: #000;
