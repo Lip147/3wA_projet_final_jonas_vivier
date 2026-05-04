@@ -26,7 +26,7 @@
             --home-bg: url("/site_mvc_db/public/images/coucher-de-soleil-surla-foret-arcm.JPG");
         }
         body:has(.menu-coutures:hover) {
-            --home-bg: url("/site_mvc_db/public/images/placeholderjeanmaison.jpg");
+            --home-bg: url("/site_mvc_db/public/images/coussinjean.jpeg");
         }
         body:has(.menu-evenements:hover) {
             --home-bg: url("/site_mvc_db/public/images/hotel-sully.jpeg");
