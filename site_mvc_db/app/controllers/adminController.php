@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . '/../controllers/authController.php';
-require __DIR__ . '/../models/peintureModel.php';
-require __DIR__ . '/../models/coutureModel.php';
-require __DIR__ . '/../models/evenementModel.php';
+require_once __DIR__ . '/../models/peintureModel.php';
+require_once __DIR__ . '/../models/coutureModel.php';
+require_once __DIR__ . '/../models/evenementModel.php';
 
 function adminHandleImageUpload(array $data) {
     if (empty($_FILES['image_file']) || $_FILES['image_file']['error'] === UPLOAD_ERR_NO_FILE) {
@@ -29,17 +29,24 @@ function adminHandleImageUpload(array $data) {
     if (!isset($extensions[$imageType])) {
         return $data;
     }
+    $extension = $extensions[$imageType];
 
     $uploadDir = __DIR__ . '/../../public/images/uploads';
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0775, true);
     }
 
-    $filename = 'upload_' . date('Ymd_His') . '_' . bin2hex(random_bytes(4)) . '.' . $extensions[$imageType];
+    $filename = 'upload_' . date('Ymd_His') . '_' . bin2hex(random_bytes(4)) . '.' . $extension;
     $destination = $uploadDir . '/' . $filename;
 
     if (move_uploaded_file($tmpPath, $destination)) {
         $data['image'] = '/site_mvc_db/public/images/uploads/' . $filename;
+        $data['media_original_name'] = $_FILES['image_file']['name'] ?? $filename;
+        $data['media_extension'] = $extension;
+        $data['media_mime_type'] = $imageInfo['mime'] ?? null;
+        $data['media_size_bytes'] = $_FILES['image_file']['size'] ?? null;
+        $data['media_width'] = $imageInfo[0] ?? null;
+        $data['media_height'] = $imageInfo[1] ?? null;
     }
 
     return $data;
@@ -54,6 +61,7 @@ function admin() {
 function adminAddPeinture(array $data) {
     requireAdmin();
     $data = adminHandleImageUpload($data);
+    $data['author_id'] = currentAdminId();
     addPeinture($data);
     header('Location: /site_mvc_db/public/admin');
     exit;
@@ -69,6 +77,7 @@ function adminDeletePeinture(int $id) {
 function adminUpdatePeinture(array $data) {
     requireAdmin();
     $data = adminHandleImageUpload($data);
+    $data['author_id'] = currentAdminId();
     $id = $data['id'] ?? null;
     if ($id) {
         updatePeinture((int)$id, $data);
@@ -86,6 +95,7 @@ function adminCoutures() {
 function adminAddCouture(array $data) {
     requireAdmin();
     $data = adminHandleImageUpload($data);
+    $data['author_id'] = currentAdminId();
     addCouture($data);
     header('Location: /site_mvc_db/public/admin/coutures');
     exit;
@@ -101,6 +111,7 @@ function adminDeleteCouture(int $id) {
 function adminUpdateCouture(array $data) {
     requireAdmin();
     $data = adminHandleImageUpload($data);
+    $data['author_id'] = currentAdminId();
     $id = $data['id'] ?? null;
     if ($id) {
         updateCouture((int)$id, $data);
@@ -118,6 +129,7 @@ function adminEvenements() {
 function adminAddEvenement(array $data) {
     requireAdmin();
     $data = adminHandleImageUpload($data);
+    $data['author_id'] = currentAdminId();
     addEvenement($data);
     header('Location: /site_mvc_db/public/admin/evenements');
     exit;
@@ -133,6 +145,7 @@ function adminDeleteEvenement(int $id) {
 function adminUpdateEvenement(array $data) {
     requireAdmin();
     $data = adminHandleImageUpload($data);
+    $data['author_id'] = currentAdminId();
     $id = $data['id'] ?? null;
     if ($id) {
         updateEvenement((int)$id, $data);
