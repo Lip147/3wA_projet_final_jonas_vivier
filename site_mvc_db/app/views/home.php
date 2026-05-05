@@ -61,7 +61,7 @@
     </div>
     <div class="main-menu">
         <a class="menu-peintures" href="/site_mvc_db/public/peinture">Peintures</a>
-        <a class="menu-coutures" href="/site_mvc_db/public/couture">Coutures</a>
+        <a class="menu-coutures" href="/site_mvc_db/public/couture">Textiles</a>
         <a class="menu-evenements" href="/site_mvc_db/public/expositions">&Eacute;v&eacute;nements</a>
     </div>
 </body>

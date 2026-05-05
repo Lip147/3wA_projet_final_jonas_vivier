@@ -28,7 +28,7 @@
             <div>
                 <a href="/site_mvc_db/public/">Accueil</a>
                 <a href="/site_mvc_db/public/admin" style="margin-left:1rem;">Peintures</a>
-                <a href="/site_mvc_db/public/admin/coutures" style="margin-left:1rem;">Coutures</a>
+                <a href="/site_mvc_db/public/admin/coutures" style="margin-left:1rem;">Textiles</a>
                 <a href="/site_mvc_db/public/admin/evenements" style="margin-left:1rem;">Événements</a>
                 <a href="/site_mvc_db/public/biographie" style="margin-left:1rem;">Biographie</a>
                 <a href="/site_mvc_db/public/contact" style="margin-left:1rem;">Contact</a>

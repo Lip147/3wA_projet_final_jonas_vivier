@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Coutures</title>
+    <title>Textiles</title>
     <link rel="stylesheet" href="/site_mvc_db/public/styles/style.css">
     <style>
         .paintings-layout {
@@ -251,7 +251,6 @@
         <div class="gallery-navlinks">
             <a href="/site_mvc_db/public/home">Accueil</a>
             <a href="/site_mvc_db/public/peinture">Peintures</a>
-            <a class="is-active" href="/site_mvc_db/public/couture">Coutures</a>
             <a href="/site_mvc_db/public/expositions">Événements</a>
             <a href="/site_mvc_db/public/biographie">Biographie</a>
             <a href="/site_mvc_db/public/contact">Contact</a>
@@ -263,7 +262,7 @@
             <form class="filter-form" method="get" action="/site_mvc_db/public/couture">
                 <label>
                     Recherche
-                    <input type="text" name="search" placeholder="Nom de la couture" value="<?php echo htmlspecialchars($search ?? ''); ?>">
+                    <input type="text" name="search" placeholder="Nom du textile" value="<?php echo htmlspecialchars($search ?? ''); ?>">
                 </label>
                 <label>
                     Catégorie
@@ -284,9 +283,9 @@
                 </div>
             </form>
         </aside>
-        <section class="gallery-grid" aria-label="Grille des coutures">
+        <section class="gallery-grid" aria-label="Grille des textiles">
             <?php if (empty($coutures)): ?>
-            <p class="gallery-empty">Aucune couture trouvée.</p>
+            <p class="gallery-empty">Aucun textile trouvé.</p>
             <?php else: ?>
             <?php
             $hoverColors = ['#ffc400', '#00a6ff', '#ff4d6d', '#32c46c', '#8f5cff', '#ff7a00'];
