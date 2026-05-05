@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo htmlspecialchars($pageTitle ?? 'ARCM'); ?></title>
+    <title><?php echo htmlspecialchars($pageTitle ?? 'ARCH'); ?></title>
     <link rel="stylesheet" href="/site_mvc_db/public/styles/style.css">
 </head>
 <body class="<?php echo htmlspecialchars($bodyClass ?? 'gallery-page'); ?>">
@@ -16,7 +16,7 @@
         <a href="/site_mvc_db/public/peinture">Peintures</a>
         <?php endif; ?>
         <?php if (($activePage ?? '') !== 'couture'): ?>
-        <a href="/site_mvc_db/public/couture">Textiles</a>
+        <a href="/site_mvc_db/public/couture">Arts textiles</a>
         <?php endif; ?>
         <?php if (($activePage ?? '') !== 'expositions'): ?>
         <a href="/site_mvc_db/public/expositions">&Eacute;v&eacute;nements</a>

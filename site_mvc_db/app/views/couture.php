@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Textiles</title>
+    <title>Arts textiles</title>
     <link rel="stylesheet" href="/site_mvc_db/public/styles/style.css">
     <style>
         .paintings-layout {
@@ -15,10 +15,11 @@
             padding: 1.75rem 0 4rem;
         }
         .paintings-filter {
+            --filter-sticky-offset: calc(8.25rem + 47px + 1.75rem);
             align-self: start;
             position: sticky;
-            top: calc(8.25rem + 47px + 1.75rem);
-            z-index: 10;
+            top: var(--filter-sticky-offset);
+            z-index: 5;
             min-height: 605px;
             background: #fff;
             color: #000;
@@ -283,7 +284,7 @@
                 </div>
             </form>
         </aside>
-        <section class="gallery-grid" aria-label="Grille des textiles">
+        <section class="gallery-grid" aria-label="Grille des arts textiles">
             <?php if (empty($coutures)): ?>
             <p class="gallery-empty">Aucun textile trouvé.</p>
             <?php else: ?>

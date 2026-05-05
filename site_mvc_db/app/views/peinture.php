@@ -15,10 +15,11 @@
 			padding: 1.75rem 0 4rem;
 		}
 		.paintings-filter {
+			--filter-sticky-offset: calc(8.25rem + 47px + 1.75rem);
 			align-self: start;
 			position: sticky;
-			top: calc(8.25rem + 47px + 1.75rem);
-			z-index: 10;
+			top: var(--filter-sticky-offset);
+			z-index: 5;
 			min-height: 605px;
 			background: #fff;
 			color: #000;
@@ -250,7 +251,7 @@
 		<a class="gallery-logo" href="/site_mvc_db/public/home" aria-label="Accueil"></a>
 		<div class="gallery-navlinks">
 			<a href="/site_mvc_db/public/home">Accueil</a>
-			<a href="/site_mvc_db/public/couture">Textiles</a>
+			<a href="/site_mvc_db/public/couture">Arts textiles</a>
 			<a href="/site_mvc_db/public/expositions">&Eacute;venements</a>
 			<a href="/site_mvc_db/public/biographie">Biographie</a>
 			<a href="/site_mvc_db/public/contact">Contact</a>

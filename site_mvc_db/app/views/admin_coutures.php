@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Admin - Textiles</title>
+    <title>Admin - Arts textiles</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; }
         .container { max-width: 900px; margin: 2rem auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 2rem; }
@@ -28,13 +28,13 @@
             <div>
                 <a href="/site_mvc_db/public/">Accueil</a>
                 <a href="/site_mvc_db/public/admin" style="margin-left:1rem;">Peintures</a>
-                <a href="/site_mvc_db/public/admin/coutures" style="margin-left:1rem;">Textiles</a>
+                <a href="/site_mvc_db/public/admin/coutures" style="margin-left:1rem;">Arts textiles</a>
                 <a href="/site_mvc_db/public/admin/evenements" style="margin-left:1rem;">Événements</a>
                 <a href="/site_mvc_db/public/contact" style="margin-left:1rem;">Contact</a>
             </div>
             <a href="/site_mvc_db/public/logout" style="color:#c00;">Déconnexion</a>
         </div>
-        <h1>Administration des textiles</h1>
+        <h1>Administration des arts textiles</h1>
         <form method="post" action="/site_mvc_db/public/admin/coutures/add" enctype="multipart/form-data">
             <input type="text" name="title" placeholder="Titre" required>
             <input type="text" name="image" placeholder="URL ou chemin de l'image">

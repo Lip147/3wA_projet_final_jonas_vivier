@@ -11,7 +11,7 @@
         <div class="gallery-navlinks">
             <a href="/site_mvc_db/public/home">Accueil</a>
             <a href="/site_mvc_db/public/peinture">Peintures</a>
-            <a href="/site_mvc_db/public/couture">Textiles</a>
+            <a href="/site_mvc_db/public/couture">Arts textiles</a>
             <a href="/site_mvc_db/public/expositions">&Eacute;venements</a>
             <a href="/site_mvc_db/public/biographie">Biographie</a>
         </div>
