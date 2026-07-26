@@ -8,7 +8,7 @@ require __DIR__ . '/partials/header.php';
     .biography-layout {
         display: grid;
         grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
-        gap: 4rem;
+        gap: 10rem;
         width: min(100% - 6rem, 1180px);
         margin: 0 auto;
         padding: 3rem 0 6rem;
@@ -21,9 +21,25 @@ require __DIR__ . '/partials/header.php';
         line-height: 0.95;
     }
 
+    .biography-heading {
+        padding-top: 1rem;
+    }
+
+    .biography-portrait-placeholder {
+        display: grid;
+        place-items: center;
+        width: min(100%, 320px);
+        aspect-ratio: 3 / 4;
+        margin-top: 2.5rem;
+        border: 1px dashed #6f6f6f;
+        color: #8f8f8f;
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+
     .biography-text {
         display: grid;
-        gap: 1.2rem;
+        gap: 0;
         color: #d8d8d8;
         font-size: 1.08rem;
         line-height: 1.7;
@@ -40,11 +56,16 @@ require __DIR__ . '/partials/header.php';
             gap: 2rem;
             padding: 2rem 0 4rem;
         }
+
+        .biography-heading {
+            padding-top: 0;
+        }
     }
 </style>
 <main class="biography-layout">
-    <section>
+    <section class="biography-heading">
         <h1 class="biography-title">Biographie</h1>
+        <div class="biography-portrait-placeholder" role="img" aria-label="Image placeholder portrait">Portrait</div>
     </section>
     <section class="biography-text" aria-label="Texte de biographie">
         <p>Annie Roger-Chamoulaud d&eacute;veloppe un univers plastique entre peinture, mati&egrave;re et composition textile.</p>
