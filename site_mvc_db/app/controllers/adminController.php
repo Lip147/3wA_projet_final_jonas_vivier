@@ -54,7 +54,9 @@ function adminHandleImageUpload(array $data) {
 
 function admin() {
     requireAdmin();
-    $peintures = getPeintures();
+    $category = trim($_GET['category'] ?? '');
+    $categories = getAllCategories();
+    $peintures = $category !== '' ? getPeinturesByCategory($category) : getPeintures();
     require __DIR__ . '/../views/admin.php';
 }
 
@@ -88,7 +90,9 @@ function adminUpdatePeinture(array $data) {
 
 function adminCoutures() {
     requireAdmin();
-    $coutures = getCoutures();
+    $category = trim($_GET['category'] ?? '');
+    $categories = getAllCoutureCategories();
+    $coutures = $category !== '' ? getCouturesByCategory($category) : getCoutures();
     require __DIR__ . '/../views/admin_coutures.php';
 }
 
@@ -122,7 +126,9 @@ function adminUpdateCouture(array $data) {
 
 function adminEvenements() {
     requireAdmin();
-    $evenements = getEvenements();
+    $category = trim($_GET['category'] ?? '');
+    $categories = getAllEvenementMetas();
+    $evenements = $category !== '' ? getEvenementsByMeta($category) : getEvenements();
     require __DIR__ . '/../views/admin_evenements.php';
 }
 

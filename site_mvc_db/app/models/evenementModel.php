@@ -48,6 +48,28 @@ function getEvenements() {
     return $stmt->fetchAll();
 }
 
+function getEvenementsByMeta(string $meta) {
+    global $pdo;
+
+    $stmt = $pdo->prepare(evenementBaseSelect("WHERE e.location = ?") . " ORDER BY e.id_evenement DESC");
+    $stmt->execute([$meta]);
+
+    return $stmt->fetchAll();
+}
+
+function getAllEvenementMetas(): array {
+    global $pdo;
+
+    $stmt = $pdo->query(
+        "SELECT DISTINCT location AS meta
+         FROM evenements
+         WHERE location IS NOT NULL AND location <> ''
+         ORDER BY location"
+    );
+
+    return $stmt->fetchAll();
+}
+
 function addEvenement(array $data) {
     global $pdo;
 

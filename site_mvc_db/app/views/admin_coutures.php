@@ -20,6 +20,11 @@
         .nav { margin-bottom: 2rem; display: flex; gap: 1rem; justify-content: space-between; }
         .nav a { color: #222; text-decoration: none; font-weight: bold; }
         .nav a:hover { text-decoration: underline; }
+        .filter-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; background: #f0f0f0; border-radius: 4px; }
+        .filter-bar form { margin: 0; }
+        .filter-bar select { min-width: 220px; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
+        .filter-bar a { color: #222; font-weight: bold; text-decoration: none; }
+        .filter-bar a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -74,6 +79,24 @@
             <?php endif; ?>
         </div>
         <?php endif; ?>
+        <div class="filter-bar">
+            <form method="get" action="/site_mvc_db/public/admin/coutures">
+                <label>
+                    Filtrer par catégorie
+                    <select name="category" onchange="this.form.submit()">
+                        <option value="">Toutes les catégories</option>
+                        <?php foreach (($categories ?? []) as $cat): ?>
+                        <option value="<?php echo htmlspecialchars($cat['meta']); ?>" <?php echo (($category ?? '') === $cat['meta']) ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($cat['meta']); ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                </label>
+            </form>
+            <?php if (!empty($category)): ?>
+            <a href="/site_mvc_db/public/admin/coutures">Réinitialiser</a>
+            <?php endif; ?>
+        </div>
         <table>
             <tr>
                 <th>ID</th>
