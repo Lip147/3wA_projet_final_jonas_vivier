@@ -50,6 +50,10 @@ return [
         'controller' => '../app/controllers/contactController.php',
         'action' => function() { contact(); }
     ],
+    'media' => [
+        'controller' => '../app/controllers/mediaController.php',
+        'action' => function() { media(); }
+    ],
     'admin' => [
         'controller' => '../app/controllers/adminController.php',
         'action' => function() { admin(); }

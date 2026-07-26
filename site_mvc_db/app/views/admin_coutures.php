@@ -63,7 +63,7 @@
             <form method="post" action="/site_mvc_db/public/admin/coutures/update" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?php echo $editCouture['id']; ?>">
                 <input type="text" name="title" placeholder="Titre" value="<?php echo htmlspecialchars($editCouture['title']); ?>" required>
-                <input type="text" name="image" placeholder="URL ou chemin de l'image" value="<?php echo htmlspecialchars($editCouture['image']); ?>">
+                <input type="text" name="image" placeholder="URL ou chemin de l'image" value="<?php echo htmlspecialchars($editCouture['image_path'] ?? $editCouture['image']); ?>">
                 <input type="file" name="image_file" accept="image/*">
                 <input type="text" name="description" placeholder="Description" value="<?php echo htmlspecialchars($editCouture['description']); ?>">
                 <input type="text" name="date" placeholder="Date" value="<?php echo htmlspecialchars($editCouture['date']); ?>">

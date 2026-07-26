@@ -31,7 +31,7 @@ function adminHandleImageUpload(array $data) {
     }
     $extension = $extensions[$imageType];
 
-    $uploadDir = __DIR__ . '/../../public/images/uploads';
+    $uploadDir = __DIR__ . '/../../storage/uploads';
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0775, true);
     }
@@ -40,7 +40,7 @@ function adminHandleImageUpload(array $data) {
     $destination = $uploadDir . '/' . $filename;
 
     if (move_uploaded_file($tmpPath, $destination)) {
-        $data['image'] = '/site_mvc_db/public/images/uploads/' . $filename;
+        $data['image'] = 'uploads/' . $filename;
         $data['media_original_name'] = $_FILES['image_file']['name'] ?? $filename;
         $data['media_extension'] = $extension;
         $data['media_mime_type'] = $imageInfo['mime'] ?? null;

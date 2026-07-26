@@ -15,7 +15,23 @@ function coutureBaseSelect(string $where = ''): string {
             c.dimensions_or_size,
             c.material,
             COALESCE((
+                SELECT m.id_media
+                FROM couture_media cm
+                INNER JOIN medias m ON m.id_media = cm.id_media
+                WHERE cm.id_couture = c.id_couture
+                ORDER BY cm.is_main DESC, cm.sort_order ASC, cm.id_media ASC
+                LIMIT 1
+            ), '') AS image_media_id,
+            COALESCE((
                 SELECT m.file_path
+                FROM couture_media cm
+                INNER JOIN medias m ON m.id_media = cm.id_media
+                WHERE cm.id_couture = c.id_couture
+                ORDER BY cm.is_main DESC, cm.sort_order ASC, cm.id_media ASC
+                LIMIT 1
+            ), '') AS image_path,
+            COALESCE((
+                SELECT CONCAT('/site_mvc_db/public/media?id=', m.id_media)
                 FROM couture_media cm
                 INNER JOIN medias m ON m.id_media = cm.id_media
                 WHERE cm.id_couture = c.id_couture

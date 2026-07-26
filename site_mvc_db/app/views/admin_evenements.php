@@ -63,7 +63,7 @@
             <form method="post" action="/site_mvc_db/public/admin/evenements/update" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?php echo $editEvenement['id']; ?>">
                 <input type="text" name="title" placeholder="Titre" value="<?php echo htmlspecialchars($editEvenement['title']); ?>" required>
-                <input type="text" name="image" placeholder="URL ou chemin de l'image" value="<?php echo htmlspecialchars($editEvenement['image']); ?>">
+                <input type="text" name="image" placeholder="URL ou chemin de l'image" value="<?php echo htmlspecialchars($editEvenement['image_path'] ?? $editEvenement['image']); ?>">
                 <input type="file" name="image_file" accept="image/*">
                 <input type="text" name="description" placeholder="Description" value="<?php echo htmlspecialchars($editEvenement['description']); ?>">
                 <input type="text" name="date" placeholder="Date" value="<?php echo htmlspecialchars($editEvenement['date']); ?>">

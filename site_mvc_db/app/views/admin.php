@@ -64,7 +64,7 @@
             <form method="post" action="/site_mvc_db/public/admin/update" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?php echo $editPeinture['id']; ?>">
                 <input type="text" name="title" placeholder="Titre" value="<?php echo htmlspecialchars($editPeinture['title']); ?>" required>
-                <input type="text" name="image" placeholder="URL ou chemin de l'image" value="<?php echo htmlspecialchars($editPeinture['image']); ?>">
+                <input type="text" name="image" placeholder="URL ou chemin de l'image" value="<?php echo htmlspecialchars($editPeinture['image_path'] ?? $editPeinture['image']); ?>">
                 <input type="file" name="image_file" accept="image/*">
                 <input type="text" name="description" placeholder="Description" value="<?php echo htmlspecialchars($editPeinture['description']); ?>">
                 <input type="text" name="date" placeholder="Date" value="<?php echo htmlspecialchars($editPeinture['date']); ?>">

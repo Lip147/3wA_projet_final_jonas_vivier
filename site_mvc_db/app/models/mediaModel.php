@@ -61,6 +61,64 @@ function createMedia(array $data): ?int {
     return (int)$pdo->lastInsertId();
 }
 
+function getMediaById(int $id): ?array {
+    global $pdo;
+
+    $stmt = $pdo->prepare("SELECT * FROM medias WHERE id_media = ? LIMIT 1");
+    $stmt->execute([$id]);
+    $media = $stmt->fetch();
+
+    return $media ?: null;
+}
+
+function mediaPublicUrl(?int $mediaId): string {
+    if (!$mediaId) {
+        return '';
+    }
+
+    return '/site_mvc_db/public/media?id=' . $mediaId;
+}
+
+function resolveMediaPath(string $filePath): ?string {
+    $normalizedPath = str_replace('\\', '/', trim($filePath));
+    $baseStorage = realpath(__DIR__ . '/../../storage');
+    $basePublicUploads = realpath(__DIR__ . '/../../public/images/uploads');
+
+    if ($normalizedPath === '') {
+        return null;
+    }
+
+    $candidates = [];
+
+    if (strpos($normalizedPath, 'uploads/') === 0 && $baseStorage !== false) {
+        $candidates[] = $baseStorage . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $normalizedPath);
+    }
+
+    if (strpos($normalizedPath, '/site_mvc_db/public/images/uploads/') === 0 && $basePublicUploads !== false) {
+        $candidates[] = $basePublicUploads . DIRECTORY_SEPARATOR . basename($normalizedPath);
+    }
+
+    if (strpos($normalizedPath, '/public/images/uploads/') === 0 && $basePublicUploads !== false) {
+        $candidates[] = $basePublicUploads . DIRECTORY_SEPARATOR . basename($normalizedPath);
+    }
+
+    foreach ($candidates as $candidate) {
+        $realCandidate = realpath($candidate);
+        if ($realCandidate === false) {
+            continue;
+        }
+
+        $allowedBases = array_filter([$baseStorage, $basePublicUploads]);
+        foreach ($allowedBases as $allowedBase) {
+            if (strpos($realCandidate, $allowedBase . DIRECTORY_SEPARATOR) === 0) {
+                return $realCandidate;
+            }
+        }
+    }
+
+    return null;
+}
+
 function getPrimaryMediaPathForEntity(string $entityType, int $entityId): string {
     global $pdo;
 

@@ -16,7 +16,23 @@ function peintureBaseSelect(string $where = ''): string {
             p.dimensions AS dimension,
             p.technique,
             COALESCE((
+                SELECT m.id_media
+                FROM peinture_media pm
+                INNER JOIN medias m ON m.id_media = pm.id_media
+                WHERE pm.id_peinture = p.id_peinture
+                ORDER BY pm.is_main DESC, pm.sort_order ASC, pm.id_media ASC
+                LIMIT 1
+            ), '') AS image_media_id,
+            COALESCE((
                 SELECT m.file_path
+                FROM peinture_media pm
+                INNER JOIN medias m ON m.id_media = pm.id_media
+                WHERE pm.id_peinture = p.id_peinture
+                ORDER BY pm.is_main DESC, pm.sort_order ASC, pm.id_media ASC
+                LIMIT 1
+            ), '') AS image_path,
+            COALESCE((
+                SELECT CONCAT('/site_mvc_db/public/media?id=', m.id_media)
                 FROM peinture_media pm
                 INNER JOIN medias m ON m.id_media = pm.id_media
                 WHERE pm.id_peinture = p.id_peinture

@@ -13,7 +13,23 @@ function evenementBaseSelect(string $where = ''): string {
             e.event_date AS date,
             e.location AS meta,
             COALESCE((
+                SELECT m.id_media
+                FROM evenement_media em
+                INNER JOIN medias m ON m.id_media = em.id_media
+                WHERE em.id_evenement = e.id_evenement
+                ORDER BY em.is_main DESC, em.sort_order ASC, em.id_media ASC
+                LIMIT 1
+            ), '') AS image_media_id,
+            COALESCE((
                 SELECT m.file_path
+                FROM evenement_media em
+                INNER JOIN medias m ON m.id_media = em.id_media
+                WHERE em.id_evenement = e.id_evenement
+                ORDER BY em.is_main DESC, em.sort_order ASC, em.id_media ASC
+                LIMIT 1
+            ), '') AS image_path,
+            COALESCE((
+                SELECT CONCAT('/site_mvc_db/public/media?id=', m.id_media)
                 FROM evenement_media em
                 INNER JOIN medias m ON m.id_media = em.id_media
                 WHERE em.id_evenement = e.id_evenement
