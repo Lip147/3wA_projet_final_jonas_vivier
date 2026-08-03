@@ -23,24 +23,63 @@
         </section>
         <form class="contact-form" action="#" method="post">
             <label>
-                Nom
-                <input type="text" name="name" placeholder="Votre nom">
+                <span>Nom <span class="required-mark" aria-hidden="true">*</span></span>
+                <input type="text" name="name" placeholder="Votre nom" required>
             </label>
             <label>
-                E-mail
+                <span>E-mail <span class="required-mark" aria-hidden="true">*</span></span>
                 <input type="email" name="email" placeholder="votre@email.com" required>
             </label>
             <label>
-                Sujet
-                <input type="text" name="subject" placeholder="Objet du message">
+                <span>Sujet <span class="required-mark" aria-hidden="true">*</span></span>
+                <input type="text" name="subject" placeholder="Objet du message" required>
             </label>
             <label>
-                Message
-                <textarea name="message" placeholder="Votre message"></textarea>
+                <span>Message <span class="required-mark" aria-hidden="true">*</span></span>
+                <textarea name="message" placeholder="Votre message" required></textarea>
             </label>
-            <button type="button">Envoyer</button>
+            <button type="submit">Envoyer</button>
         </form>
     </main>
+    <script>
+        const contactForm = document.querySelector('.contact-form');
+
+        if (contactForm) {
+            const requiredFields = contactForm.querySelectorAll('[required]');
+
+            requiredFields.forEach((field) => {
+                const updateValidationMessage = () => {
+                    field.setCustomValidity('');
+
+                    if (field.validity.valueMissing) {
+                        field.setCustomValidity('Ce champ est obligatoire.');
+                    } else if (field.validity.typeMismatch) {
+                        field.setCustomValidity('Veuillez saisir une adresse e-mail valide.');
+                    }
+                };
+
+                field.addEventListener('invalid', updateValidationMessage);
+                field.addEventListener('input', updateValidationMessage);
+            });
+
+            contactForm.addEventListener('submit', (event) => {
+                requiredFields.forEach((field) => {
+                    field.setCustomValidity('');
+
+                    if (field.validity.valueMissing) {
+                        field.setCustomValidity('Ce champ est obligatoire.');
+                    } else if (field.validity.typeMismatch) {
+                        field.setCustomValidity('Veuillez saisir une adresse e-mail valide.');
+                    }
+                });
+
+                if (!contactForm.checkValidity()) {
+                    event.preventDefault();
+                    contactForm.reportValidity();
+                }
+            });
+        }
+    </script>
     <?php require __DIR__ . '/partials/legal_footer.php'; ?>
 </body>
 </html>
