@@ -28,7 +28,7 @@
             </label>
             <label>
                 E-mail
-                <input type="email" name="email" placeholder="votre@email.com">
+                <input type="email" name="email" placeholder="votre@email.com" required>
             </label>
             <label>
                 Sujet
