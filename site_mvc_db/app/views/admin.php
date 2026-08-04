@@ -2,6 +2,9 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="<?php echo htmlspecialchars($pageDescription ?? "Portfolio artistique d'Annie Roger Chamoulaud."); ?>">
+    <meta name="author" content="Jonas Vivier">
     <title>Admin - Peintures</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; }
