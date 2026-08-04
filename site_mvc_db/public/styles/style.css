@@ -58,6 +58,7 @@ body{background:black;color:white;}
     color: #888;
 }
 
+
 .home-page .nav {
     display: flex;
     gap: 2rem;
@@ -88,11 +89,11 @@ body{background:black;color:white;}
 }
 
 .home-page .menu-links {
-    position: relative;
-    z-index: 3;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    z-index: 3;
     gap: 2.5rem;
     margin-top: 5rem;
 }
@@ -125,12 +126,12 @@ body{background:black;color:white;}
 }
 
 .gallery-navbar {
-    position: sticky;
-    top: 0;
-    z-index: 50;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
     box-sizing: border-box;
     width: 100%;
     margin: 0 auto;
@@ -258,10 +259,11 @@ body{background:black;color:white;}
 }
 
 .contact-form button {
-    justify-self: start;
-    border: 1px solid #fff;
     background: #fff;
     color: #000;
+    justify-self: start;
+    border: 1px solid #fff;
+
     padding: 1rem 1.4rem;
     font: inherit;
     cursor: pointer;
