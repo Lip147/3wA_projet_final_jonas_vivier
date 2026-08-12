@@ -76,7 +76,7 @@ function mediaPublicUrl(?int $mediaId): string {
         return '';
     }
 
-    return '/site_mvc_db/public/media?id=' . $mediaId;
+    return app_url('media?id=' . $mediaId);
 }
 
 function resolveMediaPath(string $filePath): ?string {

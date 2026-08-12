@@ -65,15 +65,13 @@ function adminAddPeinture(array $data) {
     $data = adminHandleImageUpload($data);
     $data['author_id'] = currentAdminId();
     addPeinture($data);
-    header('Location: /site_mvc_db/public/admin');
-    exit;
+    redirect_to('admin');
 }
 
 function adminDeletePeinture(int $id) {
     requireAdmin();
     deletePeinture($id);
-    header('Location: /site_mvc_db/public/admin');
-    exit;
+    redirect_to('admin');
 }
 
 function adminUpdatePeinture(array $data) {
@@ -84,8 +82,7 @@ function adminUpdatePeinture(array $data) {
     if ($id) {
         updatePeinture((int)$id, $data);
     }
-    header('Location: /site_mvc_db/public/admin');
-    exit;
+    redirect_to('admin');
 }
 
 function adminCoutures() {
@@ -101,15 +98,13 @@ function adminAddCouture(array $data) {
     $data = adminHandleImageUpload($data);
     $data['author_id'] = currentAdminId();
     addCouture($data);
-    header('Location: /site_mvc_db/public/admin/coutures');
-    exit;
+    redirect_to('admin/coutures');
 }
 
 function adminDeleteCouture(int $id) {
     requireAdmin();
     deleteCouture($id);
-    header('Location: /site_mvc_db/public/admin/coutures');
-    exit;
+    redirect_to('admin/coutures');
 }
 
 function adminUpdateCouture(array $data) {
@@ -120,8 +115,7 @@ function adminUpdateCouture(array $data) {
     if ($id) {
         updateCouture((int)$id, $data);
     }
-    header('Location: /site_mvc_db/public/admin/coutures');
-    exit;
+    redirect_to('admin/coutures');
 }
 
 function adminEvenements() {
@@ -137,15 +131,13 @@ function adminAddEvenement(array $data) {
     $data = adminHandleImageUpload($data);
     $data['author_id'] = currentAdminId();
     addEvenement($data);
-    header('Location: /site_mvc_db/public/admin/evenements');
-    exit;
+    redirect_to('admin/evenements');
 }
 
 function adminDeleteEvenement(int $id) {
     requireAdmin();
     deleteEvenement($id);
-    header('Location: /site_mvc_db/public/admin/evenements');
-    exit;
+    redirect_to('admin/evenements');
 }
 
 function adminUpdateEvenement(array $data) {
@@ -156,6 +148,5 @@ function adminUpdateEvenement(array $data) {
     if ($id) {
         updateEvenement((int)$id, $data);
     }
-    header('Location: /site_mvc_db/public/admin/evenements');
-    exit;
+    redirect_to('admin/evenements');
 }

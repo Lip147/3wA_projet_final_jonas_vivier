@@ -4,6 +4,8 @@ require_once __DIR__ . '/categoryModel.php';
 require_once __DIR__ . '/mediaModel.php';
 
 function peintureBaseSelect(string $where = ''): string {
+    $mediaBaseUrl = app_url('media?id=');
+
     return
         "SELECT
             p.id_peinture AS id,
@@ -32,7 +34,7 @@ function peintureBaseSelect(string $where = ''): string {
                 LIMIT 1
             ), '') AS image_path,
             COALESCE((
-                SELECT CONCAT('/site_mvc_db/public/media?id=', m.id_media)
+                SELECT CONCAT('{$mediaBaseUrl}', m.id_media)
                 FROM peinture_media pm
                 INNER JOIN medias m ON m.id_media = pm.id_media
                 WHERE pm.id_peinture = p.id_peinture

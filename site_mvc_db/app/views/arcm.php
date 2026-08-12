@@ -25,7 +25,7 @@
             justify-content: center;
             min-height: 100vh;
             overflow: hidden;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08)), url("/site_mvc_db/public/images/arcm-bg.jpg");
+            background-image: linear-gradient(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08)), url("<?php echo rtrim(app_url(), '/'); ?>/images/arcm-bg.jpg");
             background-position: center;
             background-size: cover;
         }
@@ -83,7 +83,7 @@
 <body>
     <main class="arcm-intro">
         <h1 class="arcm-title">Annie<br>Roger-Chamoulaud</h1>
-        <a class="arcm-enter" href="/site_mvc_db/public/home">Entrer</a>
+        <a class="arcm-enter" href="<?php echo rtrim(app_url(), '/'); ?>/home">Entrer</a>
     </main>
 </body>
 </html>

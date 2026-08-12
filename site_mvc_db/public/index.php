@@ -7,6 +7,18 @@ $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
 $publicPos = strpos($scriptName, '/public');
 $basePath = $publicPos !== false ? substr($scriptName, 0, $publicPos + 7) : '';
 
+function app_url(string $path = ''): string {
+    global $basePath;
+
+    $path = '/' . ltrim($path, '/');
+    return rtrim($basePath, '/') . $path;
+}
+
+function redirect_to(string $path): void {
+    header('Location: ' . app_url($path));
+    exit;
+}
+
 $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 // Sépare le chemin des paramètres GET
 $urlParts = parse_url($requestUri);
@@ -20,7 +32,7 @@ $segments = explode('/', $request);
 $page = implode('/', array_filter($segments));
 $id   = isset($segments[2]) ? $segments[2] : null;
 
-$routes = require '../config/router.php';
+$routes = require __DIR__ . '/../config/router.php';
 if (array_key_exists($page, $routes)) {
     $route = $routes[$page];
     if (!empty($route['controller'])) {

@@ -6,7 +6,7 @@
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription ?? "Portfolio artistique d'Annie Roger Chamoulaud."); ?>">
     <meta name="author" content="Jonas Vivier">
     <title>Arts textiles</title>
-    <link rel="stylesheet" href="/site_mvc_db/public/styles/style.css">
+    <link rel="stylesheet" href="<?php echo rtrim(app_url(), '/'); ?>/styles/style.css">
     <style>
         .paintings-layout {
             box-sizing: border-box;
@@ -251,19 +251,19 @@
 </head>
 <body class="gallery-page">
     <nav class="gallery-navbar">
-        <a class="gallery-logo" href="/site_mvc_db/public/home" aria-label="Accueil"></a>
+        <a class="gallery-logo" href="<?php echo rtrim(app_url(), '/'); ?>/home" aria-label="Accueil"></a>
         <div class="gallery-navlinks">
-            <a href="/site_mvc_db/public/home">Accueil</a>
-            <a href="/site_mvc_db/public/peinture">Peintures</a>
-            <a href="/site_mvc_db/public/expositions">Événements</a>
-            <a href="/site_mvc_db/public/biographie">Biographie</a>
-            <a href="/site_mvc_db/public/contact">Contact</a>
+            <a href="<?php echo rtrim(app_url(), '/'); ?>/home">Accueil</a>
+            <a href="<?php echo rtrim(app_url(), '/'); ?>/peinture">Peintures</a>
+            <a href="<?php echo rtrim(app_url(), '/'); ?>/expositions">Événements</a>
+            <a href="<?php echo rtrim(app_url(), '/'); ?>/biographie">Biographie</a>
+            <a href="<?php echo rtrim(app_url(), '/'); ?>/contact">Contact</a>
         </div>
     </nav>
     <main class="paintings-layout">
         <aside class="paintings-filter">
             <h1>Barre de recherche</h1>
-            <form class="filter-form" method="get" action="/site_mvc_db/public/couture">
+            <form class="filter-form" method="get" action="<?php echo rtrim(app_url(), '/'); ?>/couture">
                 <label>
                     Recherche
                     <input type="text" name="search" placeholder="Nom du textile" value="<?php echo htmlspecialchars($search ?? ''); ?>">
@@ -283,7 +283,7 @@
                 </label>
                 <div class="filter-actions">
                     <button type="submit">Filtrer</button>
-                    <a href="/site_mvc_db/public/couture">Réinitialiser</a>
+                    <a href="<?php echo rtrim(app_url(), '/'); ?>/couture">Réinitialiser</a>
                 </div>
             </form>
         </aside>

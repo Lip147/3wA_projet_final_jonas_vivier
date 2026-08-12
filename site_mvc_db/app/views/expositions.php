@@ -6,7 +6,7 @@
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription ?? "Portfolio artistique d'Annie Roger Chamoulaud."); ?>">
     <meta name="author" content="Jonas Vivier">
     <title>&Eacute;v&eacute;nements</title>
-    <link rel="stylesheet" href="/site_mvc_db/public/styles/style.css">
+    <link rel="stylesheet" href="<?php echo rtrim(app_url(), '/'); ?>/styles/style.css">
     <style>
         .events-page {
             background: #000;
@@ -183,13 +183,13 @@
 </head>
 <body class="gallery-page">
     <nav class="gallery-navbar">
-        <a class="gallery-logo" href="/site_mvc_db/public/home" aria-label="Accueil"></a>
+        <a class="gallery-logo" href="<?php echo rtrim(app_url(), '/'); ?>/home" aria-label="Accueil"></a>
         <div class="gallery-navlinks">
-            <a href="/site_mvc_db/public/home">Accueil</a>
-            <a href="/site_mvc_db/public/peinture">Peintures</a>
-            <a href="/site_mvc_db/public/couture">Arts textiles</a>
-            <a href="/site_mvc_db/public/biographie">Biographie</a>
-            <a href="/site_mvc_db/public/contact">Contact</a>
+            <a href="<?php echo rtrim(app_url(), '/'); ?>/home">Accueil</a>
+            <a href="<?php echo rtrim(app_url(), '/'); ?>/peinture">Peintures</a>
+            <a href="<?php echo rtrim(app_url(), '/'); ?>/couture">Arts textiles</a>
+            <a href="<?php echo rtrim(app_url(), '/'); ?>/biographie">Biographie</a>
+            <a href="<?php echo rtrim(app_url(), '/'); ?>/contact">Contact</a>
         </div>
     </nav>
     <main class="events-page">

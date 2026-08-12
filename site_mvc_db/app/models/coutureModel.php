@@ -4,6 +4,8 @@ require_once __DIR__ . '/categoryModel.php';
 require_once __DIR__ . '/mediaModel.php';
 
 function coutureBaseSelect(string $where = ''): string {
+    $mediaBaseUrl = app_url('media?id=');
+
     return
         "SELECT
             c.id_couture AS id,
@@ -31,7 +33,7 @@ function coutureBaseSelect(string $where = ''): string {
                 LIMIT 1
             ), '') AS image_path,
             COALESCE((
-                SELECT CONCAT('/site_mvc_db/public/media?id=', m.id_media)
+                SELECT CONCAT('{$mediaBaseUrl}', m.id_media)
                 FROM couture_media cm
                 INNER JOIN medias m ON m.id_media = cm.id_media
                 WHERE cm.id_couture = c.id_couture

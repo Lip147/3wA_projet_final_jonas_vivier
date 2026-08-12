@@ -3,6 +3,8 @@ require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/mediaModel.php';
 
 function evenementBaseSelect(string $where = ''): string {
+    $mediaBaseUrl = app_url('media?id=');
+
     return
         "SELECT
             e.id_evenement AS id,
@@ -29,7 +31,7 @@ function evenementBaseSelect(string $where = ''): string {
                 LIMIT 1
             ), '') AS image_path,
             COALESCE((
-                SELECT CONCAT('/site_mvc_db/public/media?id=', m.id_media)
+                SELECT CONCAT('{$mediaBaseUrl}', m.id_media)
                 FROM evenement_media em
                 INNER JOIN medias m ON m.id_media = em.id_media
                 WHERE em.id_evenement = e.id_evenement

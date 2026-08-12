@@ -92,7 +92,7 @@
         <section class="site-footer__contact" aria-labelledby="footer-contact-title">
             <h3 id="footer-contact-title">Me contacter</h3>
             <p>Pour toute demande concernant les œuvres, les expositions ou vos données personnelles, utilisez la page de contact.</p>
-            <a class="site-footer__button" href="/site_mvc_db/public/contact">Aller au contact</a>
+            <a class="site-footer__button" href="<?php echo rtrim(app_url(), '/'); ?>/contact">Aller au contact</a>
         </section>
     </div>
 </footer>

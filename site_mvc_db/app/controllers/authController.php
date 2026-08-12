@@ -24,8 +24,7 @@ function login() {
             $_SESSION['username'] = $account['username'];
             $_SESSION['role'] = $account['role'];
 
-            header('Location: /site_mvc_db/public/admin');
-            exit;
+            redirect_to('admin');
         }
 
         $error = 'Identifiants invalides';
@@ -36,14 +35,12 @@ function login() {
 
 function logout() {
     session_destroy();
-    header('Location: /site_mvc_db/public/login');
-    exit;
+    redirect_to('login');
 }
 
 function requireAdmin() {
     if (empty($_SESSION['is_admin'])) {
-        header('Location: /site_mvc_db/public/login');
-        exit;
+        redirect_to('login');
     }
 }
 

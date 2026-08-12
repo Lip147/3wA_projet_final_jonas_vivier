@@ -34,17 +34,17 @@
     <div class="container">
         <div class="nav">
             <div>
-                <a href="/site_mvc_db/public/">Accueil</a>
-                <a href="/site_mvc_db/public/admin" style="margin-left:1rem;">Peintures</a>
-                <a href="/site_mvc_db/public/admin/coutures" style="margin-left:1rem;">Arts textiles</a>
-                <a href="/site_mvc_db/public/admin/evenements" style="margin-left:1rem;">Événements</a>
-                <a href="/site_mvc_db/public/biographie" style="margin-left:1rem;">Biographie</a>
-                <a href="/site_mvc_db/public/contact" style="margin-left:1rem;">Contact</a>
+                <a href="<?php echo rtrim(app_url(), '/'); ?>/">Accueil</a>
+                <a href="<?php echo rtrim(app_url(), '/'); ?>/admin" style="margin-left:1rem;">Peintures</a>
+                <a href="<?php echo rtrim(app_url(), '/'); ?>/admin/coutures" style="margin-left:1rem;">Arts textiles</a>
+                <a href="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements" style="margin-left:1rem;">Événements</a>
+                <a href="<?php echo rtrim(app_url(), '/'); ?>/biographie" style="margin-left:1rem;">Biographie</a>
+                <a href="<?php echo rtrim(app_url(), '/'); ?>/contact" style="margin-left:1rem;">Contact</a>
             </div>
-            <a href="/site_mvc_db/public/logout" style="color:#c00;">Déconnexion</a>
+            <a href="<?php echo rtrim(app_url(), '/'); ?>/logout" style="color:#c00;">Déconnexion</a>
         </div>
         <h1>Administration des peintures</h1>
-        <form method="post" action="/site_mvc_db/public/admin/add" enctype="multipart/form-data">
+        <form method="post" action="<?php echo rtrim(app_url(), '/'); ?>/admin/add" enctype="multipart/form-data">
             <input type="text" name="title" placeholder="Titre" required>
             <input type="text" name="image" placeholder="URL ou chemin de l'image">
             <input type="file" name="image_file" accept="image/*">
@@ -69,7 +69,7 @@
             }
             ?>
             <?php if ($editPeinture): ?>
-            <form method="post" action="/site_mvc_db/public/admin/update" enctype="multipart/form-data">
+            <form method="post" action="<?php echo rtrim(app_url(), '/'); ?>/admin/update" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?php echo $editPeinture['id']; ?>">
                 <input type="text" name="title" placeholder="Titre" value="<?php echo htmlspecialchars($editPeinture['title']); ?>" required>
                 <input type="text" name="image" placeholder="URL ou chemin de l'image" value="<?php echo htmlspecialchars($editPeinture['image_path'] ?? $editPeinture['image']); ?>">
@@ -78,13 +78,13 @@
                 <input type="text" name="date" placeholder="Date" value="<?php echo htmlspecialchars($editPeinture['date']); ?>">
                 <input type="text" name="meta" placeholder="Méta (ex. : catégorie)" value="<?php echo htmlspecialchars($editPeinture['meta']); ?>">
                 <button type="submit">Mettre à jour</button>
-                <a href="/site_mvc_db/public/admin" style="padding:0.5rem 1.5rem;background:#999;color:#fff;text-decoration:none;border-radius:4px;cursor:pointer;">Annuler</a>
+                <a href="<?php echo rtrim(app_url(), '/'); ?>/admin" style="padding:0.5rem 1.5rem;background:#999;color:#fff;text-decoration:none;border-radius:4px;cursor:pointer;">Annuler</a>
             </form>
             <?php endif; ?>
         </div>
         <?php endif; ?>
         <div class="filter-bar">
-            <form method="get" action="/site_mvc_db/public/admin">
+            <form method="get" action="<?php echo rtrim(app_url(), '/'); ?>/admin">
                 <label>
                     Filtrer par catégorie
                     <select name="category" onchange="this.form.submit()">
@@ -98,7 +98,7 @@
                 </label>
             </form>
             <?php if (!empty($category)): ?>
-            <a href="/site_mvc_db/public/admin">Réinitialiser</a>
+            <a href="<?php echo rtrim(app_url(), '/'); ?>/admin">Réinitialiser</a>
             <?php endif; ?>
         </div>
         <table>
@@ -121,8 +121,8 @@
                 <td><?php echo htmlspecialchars($p['date']); ?></td>
                 <td><?php echo htmlspecialchars($p['meta']); ?></td>
                 <td class="actions">
-                    <a href="/site_mvc_db/public/admin?edit=<?php echo $p['id']; ?>" style="padding:0.5rem 1rem;background:#0066cc;color:#fff;text-decoration:none;border-radius:4px;margin-right:0.5rem;">Modifier</a>
-                    <form method="post" action="/site_mvc_db/public/admin/delete" style="display:inline;">
+                    <a href="<?php echo rtrim(app_url(), '/'); ?>/admin?edit=<?php echo $p['id']; ?>" style="padding:0.5rem 1rem;background:#0066cc;color:#fff;text-decoration:none;border-radius:4px;margin-right:0.5rem;">Modifier</a>
+                    <form method="post" action="<?php echo rtrim(app_url(), '/'); ?>/admin/delete" style="display:inline;">
                         <input type="hidden" name="id" value="<?php echo $p['id']; ?>">
                         <button type="submit" onclick="return confirm('Supprimer cette peinture ?');">Supprimer</button>
                     </form>

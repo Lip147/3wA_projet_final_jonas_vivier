@@ -26,11 +26,11 @@ body{background:black;color:white;}
 }
 
 .home-page:has(.menu-peintures:hover) {
-    --home-bg: url("/site_mvc_db/public/images/coucher-de-soleil-surla-foret-arcm.JPG");
+    --home-bg: url("../images/coucher-de-soleil-surla-foret-arcm.JPG");
 }
 
 .home-page:has(.menu-coutures:hover) {
-    --home-bg: url("/site_mvc_db/public/images/coussinjean.jpeg");
+    --home-bg: url("../images/coussinjean.jpeg");
 }
 
 .home-page:has(.menu-peintures:hover)::before,
