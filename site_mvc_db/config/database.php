@@ -1,9 +1,11 @@
 <?php
-$host = 'localhost';
-$db   = 'mamie_gallery';
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
+require_once __DIR__ . '/env.php';
+
+$host = env_value('DB_HOST', 'localhost');
+$db   = env_value('DB_NAME', 'mamie_gallery');
+$user = env_value('DB_USER', 'root');
+$pass = env_value('DB_PASSWORD', '');
+$charset = env_value('DB_CHARSET', 'utf8mb4');
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 

@@ -1,18 +1,16 @@
 <?php
+require_once __DIR__ . '/env.php';
 
 return [
-    // Remplacez ces valeurs par les informations SMTP du fournisseur mail.
-    'host' => 'smtp.gmail.com',
-    'port' => 587,
-    'encryption' => 'tls',
-    'username' => 'liptestpro@gmail.com',
-    'password' => 'LipTestPro35@',
+    'host' => env_value('MAIL_HOST', ''),
+    'port' => (int) env_value('MAIL_PORT', 587),
+    'encryption' => env_value('MAIL_ENCRYPTION', 'tls'),
+    'username' => env_value('MAIL_USERNAME', ''),
+    'password' => env_value('MAIL_PASSWORD', ''),
 
-    // Adresse utilisee comme expediteur technique du site.
-    'from_email' => 'liptestpro@gmail.com',
-    'from_name' => 'Site Annie Roger Chamoulaud',
+    'from_email' => env_value('MAIL_FROM_EMAIL', ''),
+    'from_name' => env_value('MAIL_FROM_NAME', 'Site Annie Roger Chamoulaud'),
 
-    // Adresse qui recevra les messages du formulaire.
-    'owner_email' => 'liptestpro@gmail.com',
-    'owner_name' => 'Lip Test',
+    'owner_email' => env_value('MAIL_OWNER_EMAIL', ''),
+    'owner_name' => env_value('MAIL_OWNER_NAME', ''),
 ];
