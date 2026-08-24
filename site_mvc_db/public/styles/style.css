@@ -225,6 +225,31 @@ body{background:black;color:white;}
     gap: 1.1rem;
 }
 
+.contact-alert {
+    margin: 0;
+    border: 1px solid #303030;
+    padding: 1rem;
+    line-height: 1.5;
+}
+
+.contact-alert p {
+    margin: 0;
+}
+
+.contact-alert p + p {
+    margin-top: 0.35rem;
+}
+
+.contact-alert-success {
+    border-color: #6fbf73;
+    color: #b7f4bb;
+}
+
+.contact-alert-error {
+    border-color: #ff6b6b;
+    color: #ffb3b3;
+}
+
 .contact-form label {
     display: grid;
     gap: 0.5rem;

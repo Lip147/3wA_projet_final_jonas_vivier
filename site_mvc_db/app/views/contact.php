@@ -24,22 +24,34 @@
             <h1>Contact</h1>
             <p>Formulaire temporaire pour préparer la future prise de contact.</p>
         </section>
-        <form class="contact-form" action="#" method="post">
+        <form class="contact-form" action="<?php echo rtrim(app_url(), '/'); ?>/contact" method="post">
+            <?php if (!empty($contactSuccess)): ?>
+                <p class="contact-alert contact-alert-success">Votre message a bien &eacute;t&eacute; envoy&eacute;.</p>
+            <?php endif; ?>
+
+            <?php if (!empty($contactErrors)): ?>
+                <div class="contact-alert contact-alert-error" role="alert">
+                    <?php foreach ($contactErrors as $error): ?>
+                        <p><?php echo htmlspecialchars($error); ?></p>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
             <label>
                 <span>Nom <span class="required-mark" aria-hidden="true">*</span></span>
-                <input type="text" name="name" placeholder="Votre nom" required>
+                <input type="text" name="name" placeholder="Votre nom" value="<?php echo htmlspecialchars($contactData['name'] ?? ''); ?>" required>
             </label>
             <label>
                 <span>E-mail <span class="required-mark" aria-hidden="true">*</span></span>
-                <input type="email" name="email" placeholder="votre@email.com" required>
+                <input type="email" name="email" placeholder="votre@email.com" value="<?php echo htmlspecialchars($contactData['email'] ?? ''); ?>" required>
             </label>
             <label>
                 <span>Sujet <span class="required-mark" aria-hidden="true">*</span></span>
-                <input type="text" name="subject" placeholder="Objet du message" required>
+                <input type="text" name="subject" placeholder="Objet du message" value="<?php echo htmlspecialchars($contactData['subject'] ?? ''); ?>" required>
             </label>
             <label>
                 <span>Message <span class="required-mark" aria-hidden="true">*</span></span>
-                <textarea name="message" placeholder="Votre message" required></textarea>
+                <textarea name="message" placeholder="Votre message" required><?php echo htmlspecialchars($contactData['message'] ?? ''); ?></textarea>
             </label>
             <button type="submit">Envoyer</button>
         </form>
