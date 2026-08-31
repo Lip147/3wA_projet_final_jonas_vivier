@@ -79,6 +79,27 @@ function mediaPublicUrl(?int $mediaId): string {
     return app_url('media?id=' . $mediaId);
 }
 
+function mediaThumbnailUrl(string $filePath, string $fallbackUrl = ''): string {
+    $path = trim($filePath);
+    if ($path === '' || preg_match('#^https?://#i', $path)) {
+        return $fallbackUrl;
+    }
+
+    $pathForName = parse_url(str_replace('\\', '/', $path), PHP_URL_PATH) ?: $path;
+    $baseName = pathinfo(basename($pathForName), PATHINFO_FILENAME);
+    if ($baseName === '') {
+        return $fallbackUrl;
+    }
+
+    $thumbnailName = $baseName . '.jpg';
+    $thumbnailPath = __DIR__ . '/../../public/images/thumbnails/' . $thumbnailName;
+    if (!is_file($thumbnailPath)) {
+        return $fallbackUrl;
+    }
+
+    return app_url('images/thumbnails/' . $thumbnailName);
+}
+
 function resolveMediaPath(string $filePath): ?string {
     $normalizedPath = str_replace('\\', '/', trim($filePath));
     $baseStorage = realpath(__DIR__ . '/../../storage');

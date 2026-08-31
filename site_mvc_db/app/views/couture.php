@@ -85,8 +85,8 @@
         }
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 1px;
             align-content: start;
             box-sizing: border-box;
             padding-bottom: 2rem;
@@ -94,71 +94,80 @@
         }
         .gallery-card {
             position: relative;
-            overflow: visible;
-            border-radius: 8px;
+            overflow: hidden;
+            border-radius: 0;
             cursor: pointer;
-            aspect-ratio: 1 / 1;
-            background: #111;
+            aspect-ratio: 4 / 5;
+            background: #050505;
+            isolation: isolate;
         }
         .gallery-card:hover {
-            z-index: 50;
+            z-index: 10;
         }
         .gallery-card img {
             position: relative;
-            z-index: 4;
+            z-index: 1;
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            border-radius: 8px;
-            transition: filter 0.3s;
+            border-radius: 0;
+            filter: grayscale(18%) contrast(1.05);
+            transform: scale(1);
+            transition: filter 0.45s ease, opacity 0.45s ease, transform 0.6s ease;
         }
         .gallery-card .hover-info {
             position: absolute;
-            inset: -5rem -1.6rem -8.5rem;
-            background: var(--hover-color, #ffc400);
+            inset: 0;
+            display: grid;
+            align-content: space-between;
+            gap: 1rem;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.1) 38%, rgba(0, 0, 0, 0.88));
             color: #fff;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.2s ease;
-            z-index: 2;
+            padding: 1rem;
+            transition: opacity 0.28s ease;
+            z-index: 3;
         }
         .gallery-card:hover .hover-info {
             opacity: 1;
         }
         .gallery-card:hover img {
-            filter: none;
+            filter: grayscale(0%) contrast(1.1) brightness(0.58);
+            transform: scale(1.045);
         }
         .hover-info__top,
         .hover-info__bottom {
-            position: absolute;
-            left: 1rem;
-            right: 1rem;
-            z-index: 5;
             display: flex;
             justify-content: space-between;
             gap: 1rem;
-            font-size: 0.95rem;
+            font-size: 0.82rem;
             line-height: 1.2;
+            text-transform: uppercase;
         }
         .hover-info__top {
-            top: 2.4rem;
             align-items: flex-start;
         }
         .hover-info__bottom {
-            bottom: 2.6rem;
-            align-items: flex-end;
+            display: grid;
+            gap: 0.9rem;
+            align-items: end;
         }
         .hover-info__title {
-            max-width: 58%;
-            max-height: 4.8rem;
+            max-width: 100%;
+            max-height: 5.2rem;
             overflow: hidden;
-            font-size: clamp(0.95rem, 1.1vw, 1.15rem);
-            line-height: 1.15;
+            font-size: clamp(1.05rem, 1.35vw, 1.6rem);
+            font-weight: 400;
+            line-height: 1.05;
+            text-transform: none;
         }
         .hover-info__meta {
-            max-width: 38%;
-            text-align: right;
+            max-width: 100%;
+            color: rgba(255, 255, 255, 0.78);
+            text-align: left;
+            text-transform: uppercase;
         }
         .gallery-empty {
             grid-column: 1 / -1;
@@ -174,58 +183,106 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            background: rgba(0, 0, 0, 0.92);
-            padding: 2rem;
+            background: rgba(0, 0, 0, 0.97);
+            padding: clamp(1rem, 3vw, 2.5rem);
         }
         .image-lightbox.is-open {
             display: flex;
         }
-        .image-lightbox img {
-            max-width: min(90vw, 1320px);
-            max-height: 78vh;
+        .lightbox-frame {
+            box-sizing: border-box;
+            display: grid;
+            place-items: center;
+            width: min(86vw, 1180px);
+            height: min(70vh, 780px);
+            background: transparent;
+            overflow: hidden;
+        }
+        .lightbox-frame img {
+            width: 100%;
+            height: 100%;
             object-fit: contain;
+            display: block;
         }
         .lightbox-band {
             box-sizing: border-box;
             display: flex;
             justify-content: space-between;
-            gap: 1.5rem;
-            width: min(90vw, 1320px);
-            background: var(--lightbox-color, #ffc400);
+            align-items: flex-start;
+            gap: 2.5rem;
+            width: min(86vw, 1180px);
+            background: transparent;
             color: #fff;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
+            border: 0;
+            padding: 0.85rem 0;
+            font-size: 0.74rem;
             line-height: 1.3;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .lightbox-band--top {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        }
+        .lightbox-band--bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.14);
+            color: rgba(255, 255, 255, 0.58);
+        }
+        .lightbox-band--top span:first-child {
+            max-width: 70%;
+            font-size: clamp(1.05rem, 1.65vw, 1.75rem);
+            line-height: 1.1;
+            letter-spacing: 0;
+            text-transform: none;
+        }
+        .lightbox-band--bottom span:last-child {
+            max-width: 70%;
+            letter-spacing: 0;
+            text-transform: none;
         }
         .lightbox-band span:last-child {
             text-align: right;
+            color: rgba(255, 255, 255, 0.5);
         }
         .image-lightbox button {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 44px;
-            height: 44px;
-            border: 1px solid #fff;
-            background: #000;
+            top: 1.25rem;
+            right: 1.25rem;
+            width: 40px;
+            height: 40px;
+            border: 0;
+            background: transparent;
             color: #fff;
-            font-size: 1.8rem;
+            font-size: 1.35rem;
             line-height: 1;
             cursor: pointer;
+            opacity: 0.62;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .image-lightbox button:hover,
+        .image-lightbox button:focus-visible {
+            background: transparent;
+            color: #fff;
+            opacity: 1;
+            transform: scale(1.05);
         }
         .image-lightbox .lightbox-nav {
             top: 50%;
             right: auto;
             transform: translateY(-50%);
-            width: 52px;
-            height: 72px;
-            font-size: 2.4rem;
+            width: 44px;
+            height: 64px;
+            font-size: 2.35rem;
         }
         .image-lightbox .lightbox-nav--prev {
-            left: calc((100vw - min(90vw, 1320px)) / 4);
+            left: max(1rem, calc((100vw - min(86vw, 1180px)) / 2 - 4.5rem));
         }
         .image-lightbox .lightbox-nav--next {
-            right: calc((100vw - min(90vw, 1320px)) / 4);
+            right: max(1rem, calc((100vw - min(86vw, 1180px)) / 2 - 4.5rem));
+        }
+        @media (max-width: 1280px) {
+            .gallery-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
         }
         @media (max-width: 900px) {
             .paintings-layout {
@@ -238,8 +295,33 @@
                 padding: 2rem;
             }
             .gallery-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+                grid-template-columns: repeat(3, minmax(0, 1fr));
                 padding-bottom: 2rem;
+            }
+            .lightbox-frame {
+                width: min(100% - 2rem, 760px);
+                height: 62vh;
+            }
+            .lightbox-band {
+                width: min(100% - 2rem, 760px);
+            }
+            .lightbox-band {
+                display: grid;
+                gap: 0.35rem;
+            }
+            .lightbox-band span:last-child {
+                text-align: left;
+            }
+            .image-lightbox .lightbox-nav--prev {
+                left: 1rem;
+            }
+            .image-lightbox .lightbox-nav--next {
+                right: 1rem;
+            }
+        }
+        @media (max-width: 700px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
         @media (max-width: 540px) {
@@ -295,11 +377,15 @@
             $hoverColors = ['#ffc400', '#00a6ff', '#ff4d6d', '#32c46c', '#8f5cff', '#ff7a00'];
             ?>
             <?php foreach ($coutures as $index => $c): ?>
+            <?php $thumbnail = mediaThumbnailUrl($c['image_path'] ?? '', $c['image'] ?? ''); ?>
             <div class="gallery-card" style="--hover-color: <?php echo $hoverColors[$index % count($hoverColors)]; ?>;">
                 <img
                     class="gallery-image"
-                    src="<?php echo htmlspecialchars($c['image']); ?>"
+                    src="<?php echo htmlspecialchars($thumbnail); ?>"
                     alt="<?php echo htmlspecialchars($c['title']); ?>"
+                    loading="lazy"
+                    decoding="async"
+                    data-full-src="<?php echo htmlspecialchars($c['image']); ?>"
                     data-title="<?php echo htmlspecialchars($c['title']); ?>"
                     data-meta="<?php echo htmlspecialchars($c['meta']); ?>"
                     data-date="<?php echo htmlspecialchars($c['date']); ?>"
@@ -328,7 +414,9 @@
             <span data-lightbox-title></span>
             <span data-lightbox-meta></span>
         </div>
-        <img src="" alt="">
+        <div class="lightbox-frame">
+            <img src="" alt="">
+        </div>
         <div class="lightbox-band lightbox-band--bottom">
             <span data-lightbox-date></span>
             <span data-lightbox-description></span>
@@ -352,7 +440,7 @@
         const showLightboxImage = (index) => {
             currentLightboxIndex = (index + galleryImages.length) % galleryImages.length;
             const image = galleryImages[currentLightboxIndex];
-            lightboxImage.src = image.src;
+            lightboxImage.src = image.dataset.fullSrc || image.src;
             lightboxImage.alt = image.alt;
             lightbox.style.setProperty('--lightbox-color', image.closest('.gallery-card').style.getPropertyValue('--hover-color'));
             lightboxTitle.textContent = image.dataset.title || '';
@@ -361,8 +449,8 @@
             lightboxDescription.textContent = image.dataset.description || '';
         };
 
-        galleryImages.forEach((image, index) => {
-            image.addEventListener('click', () => {
+        document.querySelectorAll('.gallery-card').forEach((card, index) => {
+            card.addEventListener('click', () => {
                 showLightboxImage(index);
                 lightbox.classList.add('is-open');
                 lightbox.setAttribute('aria-hidden', 'false');
