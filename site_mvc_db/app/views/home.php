@@ -10,7 +10,9 @@
 </head>
 <body class="home-page">
     <div class="header">
-        <a class="logo" href="<?php echo rtrim(app_url(), '/'); ?>/arcm">ARCH</a>
+        <a class="logo" href="<?php echo rtrim(app_url(), '/'); ?>/arcm" aria-label="ARCH">
+            <img src="<?php echo rtrim(app_url(), '/'); ?>/images/logo_arch.png" alt="ARCH">
+        </a>
         <nav class="nav">
             <a href="<?php echo rtrim(app_url(), '/'); ?>/expositions">&Eacute;v&eacute;nements</a>
             <a href="<?php echo rtrim(app_url(), '/'); ?>/biographie">Biographie</a>

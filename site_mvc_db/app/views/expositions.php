@@ -6,7 +6,7 @@
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription ?? "Portfolio artistique d'Annie Roger Chamoulaud."); ?>">
     <meta name="author" content="Jonas Vivier">
     <title>&Eacute;v&eacute;nements</title>
-    <link rel="stylesheet" href="<?php echo rtrim(app_url(), '/'); ?>/styles/style.css">
+    <link rel="stylesheet" href="<?php echo rtrim(app_url(), '/'); ?>/styles/style.css?v=<?php echo filemtime(__DIR__ . '/../../public/styles/style.css'); ?>">
     <style>
         .events-page {
             background: #000;
