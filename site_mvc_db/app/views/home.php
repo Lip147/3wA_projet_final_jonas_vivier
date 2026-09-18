@@ -11,7 +11,7 @@
 <body class="home-page">
     <div class="header">
         <a class="logo" href="<?php echo rtrim(app_url(), '/'); ?>/arcm" aria-label="ARCH">
-            <img src="<?php echo rtrim(app_url(), '/'); ?>/images/logo_arch.png" alt="ARCH">
+            <img src="<?php echo rtrim(app_url(), '/'); ?>/images/logo_arch_fond_blanc.png" alt="ARCH">
         </a>
         <nav class="nav">
             <a href="<?php echo rtrim(app_url(), '/'); ?>/expositions">&Eacute;v&eacute;nements</a>

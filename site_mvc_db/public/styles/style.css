@@ -154,7 +154,7 @@ body{background:black;color:white;}
     justify-content: center;
     width: 150px;
     height: 56px;
-    background: #fff url("../images/logo_arch.png") center / contain no-repeat;
+    background: #000 url("../images/logo_arch_fond_noir.png") center / contain no-repeat;
     text-decoration: none;
 }
 

@@ -8,7 +8,7 @@
     <title>Admin - Peintures</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; }
-        .container { max-width: 900px; margin: 2rem auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 2rem; }
+        .container { max-width: 1200px; margin: 2rem auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 2rem; overflow-x: auto; }
         h1 { text-align: center; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
         th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; }
@@ -50,7 +50,9 @@
             <input type="file" name="image_file" accept="image/*">
             <input type="text" name="description" placeholder="Description">
             <input type="text" name="date" placeholder="Date">
-            <input type="text" name="meta" placeholder="Méta (ex. : catégorie)">
+            <input type="text" name="meta" placeholder="Catégorie">
+            <input type="text" name="dimensions" placeholder="Dimensions (ex. : 80 x 60 cm)">
+            <input type="text" name="technique" placeholder="Technique utilisée">
             <button type="submit">Ajouter</button>
         </form>
         <?php if (!empty($_GET['edit'])): ?>
@@ -76,7 +78,9 @@
                 <input type="file" name="image_file" accept="image/*">
                 <input type="text" name="description" placeholder="Description" value="<?php echo htmlspecialchars($editPeinture['description']); ?>">
                 <input type="text" name="date" placeholder="Date" value="<?php echo htmlspecialchars($editPeinture['date']); ?>">
-                <input type="text" name="meta" placeholder="Méta (ex. : catégorie)" value="<?php echo htmlspecialchars($editPeinture['meta']); ?>">
+                <input type="text" name="meta" placeholder="Catégorie" value="<?php echo htmlspecialchars($editPeinture['meta']); ?>">
+                <input type="text" name="dimensions" placeholder="Dimensions (ex. : 80 x 60 cm)" value="<?php echo htmlspecialchars($editPeinture['dimensions'] ?? ''); ?>">
+                <input type="text" name="technique" placeholder="Technique utilisée" value="<?php echo htmlspecialchars($editPeinture['technique'] ?? ''); ?>">
                 <button type="submit">Mettre à jour</button>
                 <a href="<?php echo rtrim(app_url(), '/'); ?>/admin" style="padding:0.5rem 1.5rem;background:#999;color:#fff;text-decoration:none;border-radius:4px;cursor:pointer;">Annuler</a>
             </form>
@@ -108,7 +112,9 @@
                 <th>Titre</th>
                 <th>Description</th>
                 <th>Date</th>
-                <th>Méta</th>
+                <th>Catégorie</th>
+                <th>Dimensions</th>
+                <th>Technique utilisée</th>
                 <th class="actions">Actions</th>
             </tr>
             <?php if (!empty($peintures)): ?>
@@ -120,6 +126,8 @@
                 <td><?php echo htmlspecialchars($p['description']); ?></td>
                 <td><?php echo htmlspecialchars($p['date']); ?></td>
                 <td><?php echo htmlspecialchars($p['meta']); ?></td>
+                <td><?php echo htmlspecialchars($p['dimensions'] ?? ''); ?></td>
+                <td><?php echo htmlspecialchars($p['technique'] ?? ''); ?></td>
                 <td class="actions">
                     <a href="<?php echo rtrim(app_url(), '/'); ?>/admin?edit=<?php echo $p['id']; ?>" style="padding:0.5rem 1rem;background:#0066cc;color:#fff;text-decoration:none;border-radius:4px;margin-right:0.5rem;">Modifier</a>
                     <form method="post" action="<?php echo rtrim(app_url(), '/'); ?>/admin/delete" style="display:inline;">

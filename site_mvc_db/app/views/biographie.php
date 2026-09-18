@@ -36,15 +36,12 @@ require __DIR__ . '/partials/header.php';
     }
 
     .biography-portrait-placeholder {
-        display: grid;
-        place-items: center;
         justify-self: center;
         width: min(100%, 320px);
         aspect-ratio: 3 / 4;
-        border: 1px dashed #6f6f6f;
-        color: #8f8f8f;
-        font-size: 1rem;
-        text-transform: uppercase;
+        object-fit: cover;
+        object-position: center;
+        display: block;
     }
 
     .biography-text {
@@ -82,7 +79,7 @@ require __DIR__ . '/partials/header.php';
     </section>
     <div class="biography-content">
         <section class="biography-aside" aria-label="Portrait et introduction">
-            <div class="biography-portrait-placeholder" role="img" aria-label="Image placeholder portrait">Portrait</div>
+            <img class="biography-portrait-placeholder" src="<?php echo rtrim(app_url(), '/'); ?>/images/photo_annie_roger_travaillant.png" alt="Annie Roger-Chamoulaud travaillant dans un jardin">
             <div class="biography-text">
                 <p>Mon parcours d&rsquo;enseignante &agrave; l&rsquo;&eacute;cole primaire m&rsquo;a donn&eacute; la chance, pendant 40 ann&eacute;es, d&rsquo;une pratique des arts avec des &eacute;l&egrave;ves, m&rsquo;obligeant d&rsquo;une part &agrave; approfondir une connaissance puis&eacute;e dans les expositions nationales, locales, les mus&eacute;es, les livres, et d&rsquo;autre part &agrave; d&eacute;couvrir des techniques diversifi&eacute;es pour conduire ces enfants dans l&rsquo;exercice de multiples projets.</p>
                 <p>Au jour de la retraite, ma d&eacute;cision est prise de passer de l&rsquo;autre c&ocirc;t&eacute; pour exercer mon propre geste dans l&rsquo;intention d&rsquo;aborder l&rsquo;art abstrait ; je suis confront&eacute;e rapidement &agrave; la difficult&eacute; de la page blanche que je n&rsquo;arrive pas &agrave; transformer.</p>

@@ -119,9 +119,7 @@
         .gallery-card .hover-info {
             position: absolute;
             inset: 0;
-            display: grid;
-            align-content: space-between;
-            gap: 1rem;
+            display: block;
             background: linear-gradient(180deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.1) 38%, rgba(0, 0, 0, 0.88));
             color: #fff;
             opacity: 0;
@@ -137,37 +135,30 @@
             filter: grayscale(0%) contrast(1.1) brightness(0.58);
             transform: scale(1.045);
         }
-        .hover-info__top,
-        .hover-info__bottom {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            font-size: 0.82rem;
+        .hover-info__list {
+            display: grid;
+            gap: 0.9rem;
+            margin: 0;
+        }
+        .hover-info__item {
+            display: grid;
+            gap: 0.2rem;
+        }
+        .hover-info__item dt {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.62);
+            font-size: 0.68rem;
             line-height: 1.2;
             text-transform: uppercase;
         }
-        .hover-info__top {
-            align-items: flex-start;
+        .hover-info__item dd {
+            margin: 0;
+            font-size: 0.88rem;
+            line-height: 1.25;
         }
-        .hover-info__bottom {
-            display: grid;
-            gap: 0.9rem;
-            align-items: end;
-        }
-        .hover-info__title {
-            max-width: 100%;
-            max-height: 5.2rem;
-            overflow: hidden;
+        .hover-info__item:first-child dd {
             font-size: clamp(1.05rem, 1.35vw, 1.6rem);
-            font-weight: 400;
             line-height: 1.05;
-            text-transform: none;
-        }
-        .hover-info__meta {
-            max-width: 100%;
-            color: rgba(255, 255, 255, 0.78);
-            text-align: left;
-            text-transform: uppercase;
         }
         .gallery-empty {
             grid-column: 1 / -1;
@@ -190,58 +181,19 @@
             display: flex;
         }
         .lightbox-frame {
-            box-sizing: border-box;
-            display: grid;
-            place-items: center;
-            width: min(86vw, 1180px);
-            height: min(70vh, 780px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: min(86vw, 1180px);
+            max-height: 86vh;
             background: transparent;
-            overflow: hidden;
         }
         .lightbox-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+            width: auto;
+            height: auto;
+            max-width: min(86vw, 1180px);
+            max-height: 86vh;
             display: block;
-        }
-        .lightbox-band {
-            box-sizing: border-box;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 2.5rem;
-            width: min(86vw, 1180px);
-            background: transparent;
-            color: #fff;
-            border: 0;
-            padding: 0.85rem 0;
-            font-size: 0.74rem;
-            line-height: 1.3;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-        }
-        .lightbox-band--top {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-        }
-        .lightbox-band--bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.14);
-            color: rgba(255, 255, 255, 0.58);
-        }
-        .lightbox-band--top span:first-child {
-            max-width: 70%;
-            font-size: clamp(1.05rem, 1.65vw, 1.75rem);
-            line-height: 1.1;
-            letter-spacing: 0;
-            text-transform: none;
-        }
-        .lightbox-band--bottom span:last-child {
-            max-width: 70%;
-            letter-spacing: 0;
-            text-transform: none;
-        }
-        .lightbox-band span:last-child {
-            text-align: right;
-            color: rgba(255, 255, 255, 0.5);
         }
         .image-lightbox button {
             position: absolute;
@@ -299,18 +251,12 @@
                 padding-bottom: 2rem;
             }
             .lightbox-frame {
-                width: min(100% - 2rem, 760px);
-                height: 62vh;
+                max-width: calc(100vw - 4rem);
+                max-height: 82vh;
             }
-            .lightbox-band {
-                width: min(100% - 2rem, 760px);
-            }
-            .lightbox-band {
-                display: grid;
-                gap: 0.35rem;
-            }
-            .lightbox-band span:last-child {
-                text-align: left;
+            .lightbox-frame img {
+                max-width: calc(100vw - 4rem);
+                max-height: 82vh;
             }
             .image-lightbox .lightbox-nav--prev {
                 left: 1rem;
@@ -392,14 +338,12 @@
                     data-description="<?php echo htmlspecialchars($c['description']); ?>"
                 >
                 <div class="hover-info">
-                    <div class="hover-info__top">
-                        <span><?php echo htmlspecialchars($c['title']); ?></span>
-                        <span><?php echo htmlspecialchars($c['date']); ?></span>
-                    </div>
-                    <div class="hover-info__bottom">
-                        <strong class="hover-info__title"><?php echo htmlspecialchars($c['description']); ?></strong>
-                        <span class="hover-info__meta"><?php echo htmlspecialchars($c['meta']); ?></span>
-                    </div>
+                    <dl class="hover-info__list">
+                        <div class="hover-info__item"><dt>Titre</dt><dd><?php echo htmlspecialchars($c['title']); ?></dd></div>
+                        <div class="hover-info__item"><dt>Catégorie</dt><dd><?php echo htmlspecialchars($c['meta'] ?: 'À renseigner'); ?></dd></div>
+                        <div class="hover-info__item"><dt>Dimensions</dt><dd><?php echo htmlspecialchars($c['dimensions_or_size'] ?: 'À renseigner'); ?></dd></div>
+                        <div class="hover-info__item"><dt>Technique utilisée</dt><dd><?php echo htmlspecialchars($c['material'] ?: 'À renseigner'); ?></dd></div>
+                    </dl>
                 </div>
             </div>
             <?php endforeach; ?>
@@ -410,16 +354,8 @@
         <button type="button" aria-label="Fermer">&times;</button>
         <button class="lightbox-nav lightbox-nav--prev" type="button" aria-label="Image précédente">&#8249;</button>
         <button class="lightbox-nav lightbox-nav--next" type="button" aria-label="Image suivante">&#8250;</button>
-        <div class="lightbox-band lightbox-band--top">
-            <span data-lightbox-title></span>
-            <span data-lightbox-meta></span>
-        </div>
         <div class="lightbox-frame">
             <img src="" alt="">
-        </div>
-        <div class="lightbox-band lightbox-band--bottom">
-            <span data-lightbox-date></span>
-            <span data-lightbox-description></span>
         </div>
     </div>
     <script>
@@ -427,10 +363,6 @@
         const lightboxImage = lightbox.querySelector('img');
         const galleryImages = Array.from(document.querySelectorAll('.gallery-image'));
         let currentLightboxIndex = 0;
-        const lightboxTitle = lightbox.querySelector('[data-lightbox-title]');
-        const lightboxMeta = lightbox.querySelector('[data-lightbox-meta]');
-        const lightboxDate = lightbox.querySelector('[data-lightbox-date]');
-        const lightboxDescription = lightbox.querySelector('[data-lightbox-description]');
         const closeLightbox = () => {
             lightbox.classList.remove('is-open');
             lightbox.setAttribute('aria-hidden', 'true');
@@ -442,11 +374,6 @@
             const image = galleryImages[currentLightboxIndex];
             lightboxImage.src = image.dataset.fullSrc || image.src;
             lightboxImage.alt = image.alt;
-            lightbox.style.setProperty('--lightbox-color', image.closest('.gallery-card').style.getPropertyValue('--hover-color'));
-            lightboxTitle.textContent = image.dataset.title || '';
-            lightboxMeta.textContent = image.dataset.meta || '';
-            lightboxDate.textContent = image.dataset.date || '';
-            lightboxDescription.textContent = image.dataset.description || '';
         };
 
         document.querySelectorAll('.gallery-card').forEach((card, index) => {
