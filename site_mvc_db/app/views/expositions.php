@@ -58,12 +58,11 @@
             z-index: 5;
             top: 50%;
             left: clamp(1.25rem, 3vw, 3.5rem);
+            display: flex;
+            flex-direction: column;
             width: min(290px, 22vw);
-            max-height: calc(100vh - 9rem);
-            overflow-y: auto;
+            height: min(600px, calc(100vh - 14rem));
             transform: translateY(-50%);
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
         }
 
         .events-year-nav {
@@ -71,6 +70,7 @@
             grid-template-columns: 36px minmax(0, 1fr) 36px;
             gap: 0.6rem;
             align-items: center;
+            flex: 0 0 auto;
             margin-bottom: 2.25rem;
         }
 
@@ -130,12 +130,22 @@
         }
 
         .events-index-list {
+            position: absolute;
+            top: 50%;
+            left: 0;
             display: grid;
             gap: 2.2rem;
+            width: 100%;
+            max-height: min(420px, calc(100vh - 16rem));
             margin: 0 0 0 0.45rem;
             padding: 0.35rem 0 0.35rem 1.45rem;
             border-left: 1px solid rgba(255, 255, 255, 0.48);
             list-style: none;
+            min-height: 0;
+            overflow-y: auto;
+            transform: translateY(-50%);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
         }
 
         .events-index-item {
@@ -333,7 +343,9 @@
         @media (max-width: 1199px) {
             .events-index {
                 position: static;
+                display: block;
                 width: min(100% - 3rem, 1120px);
+                height: auto;
                 max-height: none;
                 margin: -2rem auto 4rem;
                 overflow: visible;
@@ -341,8 +353,13 @@
             }
 
             .events-index-list {
+                position: static;
                 grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
                 gap: 1.15rem 2rem;
+                width: auto;
+                max-height: none;
+                overflow: visible;
+                transform: none;
             }
 
             .events-year-nav {
