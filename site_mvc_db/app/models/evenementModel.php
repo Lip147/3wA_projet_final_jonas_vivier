@@ -2,6 +2,44 @@
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/mediaModel.php';
 
+function normalizeEvenementDate($date): ?string {
+    $date = trim((string)$date);
+    if ($date === '') {
+        return null;
+    }
+
+    $parsedDate = DateTimeImmutable::createFromFormat('!Y-m-d', $date);
+    $errors = DateTimeImmutable::getLastErrors();
+    if (
+        $parsedDate === false
+        || ($errors !== false && ($errors['warning_count'] > 0 || $errors['error_count'] > 0))
+        || $parsedDate->format('Y-m-d') !== $date
+    ) {
+        throw new InvalidArgumentException('La date de l\'événement doit être une date valide.');
+    }
+
+    return $date;
+}
+
+function formatEvenementDate($date): string {
+    $date = trim((string)$date);
+    if ($date === '') {
+        return '';
+    }
+
+    $parsedDate = DateTimeImmutable::createFromFormat('!Y-m-d', $date);
+    if ($parsedDate === false) {
+        return $date;
+    }
+
+    $months = [
+        1 => 'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+        'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre',
+    ];
+
+    return $parsedDate->format('j') . ' ' . $months[(int)$parsedDate->format('n')] . ' ' . $parsedDate->format('Y');
+}
+
 function evenementBaseSelect(string $where = ''): string {
     $mediaBaseUrl = app_url('media?id=');
 
@@ -45,15 +83,42 @@ function evenementBaseSelect(string $where = ''): string {
 function getEvenements() {
     global $pdo;
 
-    $stmt = $pdo->query(evenementBaseSelect() . " ORDER BY e.id_evenement DESC");
+    $stmt = $pdo->query(evenementBaseSelect() . " ORDER BY e.event_date DESC, e.id_evenement DESC");
 
     return $stmt->fetchAll();
+}
+
+function getEvenementsByYear(int $year): array {
+    global $pdo;
+
+    $startDate = sprintf('%04d-01-01', $year);
+    $endDate = sprintf('%04d-01-01', $year + 1);
+    $stmt = $pdo->prepare(
+        evenementBaseSelect("WHERE e.event_date >= ? AND e.event_date < ?")
+        . " ORDER BY e.event_date DESC, e.id_evenement DESC"
+    );
+    $stmt->execute([$startDate, $endDate]);
+
+    return $stmt->fetchAll();
+}
+
+function getEvenementYears(): array {
+    global $pdo;
+
+    $stmt = $pdo->query(
+        "SELECT DISTINCT YEAR(event_date) AS event_year
+         FROM evenements
+         WHERE event_date IS NOT NULL
+         ORDER BY event_year ASC"
+    );
+
+    return array_map('intval', $stmt->fetchAll(PDO::FETCH_COLUMN));
 }
 
 function getEvenementsByMeta(string $meta) {
     global $pdo;
 
-    $stmt = $pdo->prepare(evenementBaseSelect("WHERE e.location = ?") . " ORDER BY e.id_evenement DESC");
+    $stmt = $pdo->prepare(evenementBaseSelect("WHERE e.location = ?") . " ORDER BY e.event_date DESC, e.id_evenement DESC");
     $stmt->execute([$meta]);
 
     return $stmt->fetchAll();
@@ -89,7 +154,7 @@ function addEvenement(array $data) {
             $authorId,
             $data['title'] ?? '',
             $data['description'] ?? '',
-            $data['date'] ?? '',
+            normalizeEvenementDate($data['date'] ?? null),
             $data['location'] ?? ($data['meta'] ?? ''),
         ]);
 
@@ -127,7 +192,7 @@ function updateEvenement(int $id, array $data) {
         $stmt->execute([
             $data['title'] ?? '',
             $data['description'] ?? '',
-            $data['date'] ?? '',
+            normalizeEvenementDate($data['date'] ?? null),
             $data['location'] ?? ($data['meta'] ?? ''),
             $id,
         ]);

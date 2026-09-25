@@ -91,7 +91,7 @@ CREATE TABLE evenements (
     author_id INT NULL,
     title VARCHAR(255) NOT NULL,
     description TEXT,
-    event_date VARCHAR(100),
+    event_date DATE,
     location VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

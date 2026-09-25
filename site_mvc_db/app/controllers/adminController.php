@@ -120,9 +120,10 @@ function adminUpdateCouture(array $data) {
 
 function adminEvenements() {
     requireAdmin();
-    $category = trim($_GET['category'] ?? '');
-    $categories = getAllEvenementMetas();
-    $evenements = $category !== '' ? getEvenementsByMeta($category) : getEvenements();
+    $eventYears = getEvenementYears();
+    $requestedYear = filter_input(INPUT_GET, 'year', FILTER_VALIDATE_INT);
+    $selectedYear = in_array($requestedYear, $eventYears, true) ? $requestedYear : null;
+    $evenements = $selectedYear !== null ? getEvenementsByYear($selectedYear) : getEvenements();
     require __DIR__ . '/../views/admin_evenements.php';
 }
 

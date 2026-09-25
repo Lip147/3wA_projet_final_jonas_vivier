@@ -17,6 +17,8 @@
         .actions { text-align: center; }
         form { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
         form input, form textarea { flex: 1 1 150px; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
+        .date-field { display: grid; flex: 1 1 180px; gap: 0.35rem; color: #555; font-size: 0.8rem; font-weight: bold; }
+        .date-field input { box-sizing: border-box; width: 100%; color: #222; font: inherit; }
         form input[type="file"] { background: #fafafa; }
         form button { padding: 0.5rem 1.5rem; background: #222; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
         form button:hover { background: #444; }
@@ -48,7 +50,10 @@
             <input type="text" name="image" placeholder="URL ou chemin de l'image">
             <input type="file" name="image_file" accept="image/*">
             <input type="text" name="description" placeholder="Description">
-            <input type="text" name="date" placeholder="Date">
+            <label class="date-field">
+                Date de l'événement
+                <input type="date" name="date">
+            </label>
             <input type="text" name="meta" placeholder="Méta (ex. : lieu)">
             <button type="submit">Ajouter</button>
         </form>
@@ -74,7 +79,10 @@
                 <input type="text" name="image" placeholder="URL ou chemin de l'image" value="<?php echo htmlspecialchars($editEvenement['image_path'] ?? $editEvenement['image']); ?>">
                 <input type="file" name="image_file" accept="image/*">
                 <input type="text" name="description" placeholder="Description" value="<?php echo htmlspecialchars($editEvenement['description']); ?>">
-                <input type="text" name="date" placeholder="Date" value="<?php echo htmlspecialchars($editEvenement['date']); ?>">
+                <label class="date-field">
+                    Date de l'événement
+                    <input type="date" name="date" value="<?php echo htmlspecialchars($editEvenement['date']); ?>">
+                </label>
                 <input type="text" name="meta" placeholder="Méta (ex. : lieu)" value="<?php echo htmlspecialchars($editEvenement['meta']); ?>">
                 <button type="submit">Mettre à jour</button>
                 <a href="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements" style="padding:0.5rem 1.5rem;background:#999;color:#fff;text-decoration:none;border-radius:4px;cursor:pointer;">Annuler</a>
@@ -85,18 +93,16 @@
         <div class="filter-bar">
             <form method="get" action="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements">
                 <label>
-                    Filtrer par lieu
-                    <select name="category" onchange="this.form.submit()">
-                        <option value="">Tous les lieux</option>
-                        <?php foreach (($categories ?? []) as $cat): ?>
-                        <option value="<?php echo htmlspecialchars($cat['meta']); ?>" <?php echo (($category ?? '') === $cat['meta']) ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($cat['meta']); ?>
-                        </option>
+                    Filtrer par année
+                    <select name="year" onchange="this.form.submit()">
+                        <option value="">Toutes les années</option>
+                        <?php foreach (($eventYears ?? []) as $year): ?>
+                        <option value="<?php echo $year; ?>" <?php echo $year === ($selectedYear ?? null) ? 'selected' : ''; ?>><?php echo $year; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </label>
             </form>
-            <?php if (!empty($category)): ?>
+            <?php if ($selectedYear !== null): ?>
             <a href="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements">Réinitialiser</a>
             <?php endif; ?>
         </div>
@@ -121,7 +127,7 @@
                 </td>
                 <td><?php echo htmlspecialchars($e['title']); ?></td>
                 <td><?php echo htmlspecialchars($e['description']); ?></td>
-                <td><?php echo htmlspecialchars($e['date']); ?></td>
+                <td><?php echo htmlspecialchars(formatEvenementDate($e['date'])); ?></td>
                 <td><?php echo htmlspecialchars($e['meta']); ?></td>
                 <td class="actions">
                     <a href="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements?edit=<?php echo $e['id']; ?>" style="padding:0.5rem 1rem;background:#0066cc;color:#fff;text-decoration:none;border-radius:4px;margin-right:0.5rem;">Modifier</a>
