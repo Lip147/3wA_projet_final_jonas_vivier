@@ -28,6 +28,7 @@
         .filter-bar select { min-width: 220px; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
         .filter-bar a { color: #222; font-weight: bold; text-decoration: none; }
         .filter-bar a:hover { text-decoration: underline; }
+        .admin-error { margin-bottom: 1.5rem; padding: 0.85rem 1rem; border-left: 4px solid #b00020; background: #fff0f2; color: #7a0016; }
     </style>
 </head>
 <body>
@@ -43,7 +44,12 @@
             <a href="<?php echo rtrim(app_url(), '/'); ?>/logout" style="color:#c00;">Déconnexion</a>
         </div>
         <h1>Administration des arts textiles</h1>
+        <?php if ($adminError !== ''): ?>
+        <p class="admin-error" role="alert"><?php echo e($adminError); ?></p>
+        <?php endif; ?>
         <form method="post" action="<?php echo rtrim(app_url(), '/'); ?>/admin/coutures/add" enctype="multipart/form-data">
+            <?php echo csrf_input(); ?>
+            <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo adminMaxImageBytes(); ?>">
             <input type="text" name="title" placeholder="Titre" required>
             <input type="text" name="image" placeholder="URL ou chemin de l'image">
             <input type="file" name="image_file" accept="image/*">
@@ -71,7 +77,9 @@
             ?>
             <?php if ($editCouture): ?>
             <form method="post" action="<?php echo rtrim(app_url(), '/'); ?>/admin/coutures/update" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="<?php echo $editCouture['id']; ?>">
+                <?php echo csrf_input(); ?>
+                <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo adminMaxImageBytes(); ?>">
+                <input type="hidden" name="id" value="<?php echo (int)$editCouture['id']; ?>">
                 <input type="text" name="title" placeholder="Titre" value="<?php echo htmlspecialchars($editCouture['title']); ?>" required>
                 <input type="text" name="image" placeholder="URL ou chemin de l'image" value="<?php echo htmlspecialchars($editCouture['image_path'] ?? $editCouture['image']); ?>">
                 <input type="file" name="image_file" accept="image/*">
@@ -119,7 +127,7 @@
             <?php if (!empty($coutures)): ?>
             <?php foreach ($coutures as $c): ?>
             <tr>
-                <td><?php echo $c['id']; ?></td>
+                <td><?php echo (int)$c['id']; ?></td>
                 <td><img src="<?php echo htmlspecialchars($c['image']); ?>" alt="" style="max-width:80px;"></td>
                 <td><?php echo htmlspecialchars($c['title']); ?></td>
                 <td><?php echo htmlspecialchars($c['description']); ?></td>
@@ -128,9 +136,10 @@
                 <td><?php echo htmlspecialchars($c['dimensions_or_size'] ?? ''); ?></td>
                 <td><?php echo htmlspecialchars($c['material'] ?? ''); ?></td>
                 <td class="actions">
-                    <a href="<?php echo rtrim(app_url(), '/'); ?>/admin/coutures?edit=<?php echo $c['id']; ?>" style="padding:0.5rem 1rem;background:#0066cc;color:#fff;text-decoration:none;border-radius:4px;margin-right:0.5rem;">Modifier</a>
+                    <a href="<?php echo rtrim(app_url(), '/'); ?>/admin/coutures?edit=<?php echo (int)$c['id']; ?>" style="padding:0.5rem 1rem;background:#0066cc;color:#fff;text-decoration:none;border-radius:4px;margin-right:0.5rem;">Modifier</a>
                     <form method="post" action="<?php echo rtrim(app_url(), '/'); ?>/admin/coutures/delete" style="display:inline;">
-                        <input type="hidden" name="id" value="<?php echo $c['id']; ?>">
+                        <?php echo csrf_input(); ?>
+                        <input type="hidden" name="id" value="<?php echo (int)$c['id']; ?>">
                         <button type="submit" onclick="return confirm('Supprimer ce textile ?');">Supprimer</button>
                     </form>
                 </td>

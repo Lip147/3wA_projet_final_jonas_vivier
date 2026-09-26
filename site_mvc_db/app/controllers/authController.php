@@ -1,10 +1,7 @@
 <?php
 // app/controllers/authController.php
 require_once __DIR__ . '/../../config/database.php';
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/../../config/session.php';
 
 function login() {
     global $pdo;
@@ -19,6 +16,9 @@ function login() {
         $account = $stmt->fetch();
 
         if ($account && password_verify($pass, $account['password_hash'])) {
+            session_regenerate_id(true);
+            unset($_SESSION['csrf_token']);
+
             $_SESSION['is_admin'] = true;
             $_SESSION['user_id'] = (int)$account['id_user'];
             $_SESSION['username'] = $account['username'];
@@ -34,6 +34,21 @@ function login() {
 }
 
 function logout() {
+    $_SESSION = [];
+
+    if (ini_get('session.use_cookies')) {
+        $params = session_get_cookie_params();
+
+        setcookie(session_name(), '', [
+            'expires' => time() - 42000,
+            'path' => $params['path'],
+            'domain' => $params['domain'],
+            'secure' => $params['secure'],
+            'httponly' => $params['httponly'],
+            'samesite' => $params['samesite'] ?? 'Lax',
+        ]);
+    }
+
     session_destroy();
     redirect_to('login');
 }

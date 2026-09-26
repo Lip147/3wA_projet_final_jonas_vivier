@@ -468,10 +468,10 @@
                 <div class="events-year-list">
                     <?php foreach ($eventYears as $yearIndex => $year): ?>
                     <a class="events-year-link<?php echo $year === $selectedYear ? ' is-selected' : ''; ?>"
-                       href="<?php echo rtrim(app_url(), '/'); ?>/expositions?year=<?php echo $year; ?>"
-                       data-year-index="<?php echo $yearIndex; ?>"
+                       href="<?php echo rtrim(app_url(), '/'); ?>/expositions?year=<?php echo (int)$year; ?>"
+                       data-year-index="<?php echo (int)$yearIndex; ?>"
                        <?php echo ($yearIndex < $yearWindowStart || $yearIndex >= $yearWindowStart + 3) ? 'hidden' : ''; ?>
-                       <?php echo $year === $selectedYear ? 'aria-current="page"' : ''; ?>><?php echo $year; ?></a>
+                       <?php echo $year === $selectedYear ? 'aria-current="page"' : ''; ?>><?php echo (int)$year; ?></a>
                     <?php endforeach; ?>
                 </div>
                 <button class="events-year-arrow events-year-arrow--newer" type="button" aria-label="Afficher les années plus récentes" title="Années plus récentes">&#8594;</button>

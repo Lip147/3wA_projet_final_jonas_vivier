@@ -15,5 +15,7 @@ try {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
     ]);
 } catch (PDOException $e) {
-    die("Erreur DB : " . $e->getMessage());
+    error_log('[Database] Connection failed: ' . $e->getMessage());
+    http_response_code(500);
+    exit('Une erreur interne est survenue. Veuillez reessayer plus tard.');
 }

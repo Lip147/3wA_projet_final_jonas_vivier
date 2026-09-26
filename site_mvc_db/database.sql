@@ -166,9 +166,6 @@ CREATE TABLE couture_categorie (
         ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO users (username, email, password_hash, role) VALUES
-('admin', 'admin@example.com', '$2y$10$YBHSDGF2AjZQziEKn1AO/uxppvOAyfa5jNZMXCfCoDKEYvADFmC4a', 'super_admin');
-
 INSERT INTO categories (name, slug, type, description) VALUES
 ('Abstrait', 'abstrait', 'peinture', 'Categorie de peintures abstraites'),
 ('Paysage', 'paysage', 'peinture', 'Categorie de peintures de paysages'),
@@ -176,12 +173,12 @@ INSERT INTO categories (name, slug, type, description) VALUES
 ('Accessoire', 'accessoire', 'couture', 'Categorie de creations textiles accessoires');
 
 INSERT INTO peintures (author_id, title, description, creation_date, dimensions, technique) VALUES
-(1, 'Abstraction Rouge', 'Peinture rouge intense', '2026', '100x80 cm', ''),
-(1, 'Fusion Bleue', 'Art bleu fluide', '2026', '120x90 cm', '');
+(NULL, 'Abstraction Rouge', 'Peinture rouge intense', '2026', '100x80 cm', ''),
+(NULL, 'Fusion Bleue', 'Art bleu fluide', '2026', '120x90 cm', '');
 
 INSERT INTO medias (file_path, original_name, extension, mime_type, alt_text, uploaded_by) VALUES
-('https://picsum.photos/500?1', 'picsum-1', 'jpg', 'image/jpeg', 'Abstraction Rouge', 1),
-('https://picsum.photos/500?2', 'picsum-2', 'jpg', 'image/jpeg', 'Fusion Bleue', 1);
+('https://picsum.photos/500?1', 'picsum-1', 'jpg', 'image/jpeg', 'Abstraction Rouge', NULL),
+('https://picsum.photos/500?2', 'picsum-2', 'jpg', 'image/jpeg', 'Fusion Bleue', NULL);
 
 INSERT INTO peinture_media (id_peinture, id_media, is_main, sort_order) VALUES
 (1, 1, 1, 0),

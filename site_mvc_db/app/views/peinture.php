@@ -43,16 +43,8 @@
 		}
 		.filter-field {
 			display: grid;
-			grid-template-columns: 1.8rem minmax(0, 1fr);
-			gap: 0.7rem;
+			grid-template-columns: minmax(0, 1fr);
 			align-items: start;
-		}
-		.filter-index {
-			padding-top: 0.15rem;
-			color: rgba(255, 255, 255, 0.46);
-			font-size: 0.68rem;
-			font-weight: 700;
-			line-height: 1;
 		}
 		.filter-field__body {
 			display: grid;
@@ -66,7 +58,7 @@
 			display: contents;
 		}
 		.filter-field--search .filter-label {
-			grid-column: 2;
+			grid-column: 1;
 		}
 		.filter-field--search input {
 			grid-column: 1 / -1;
@@ -115,7 +107,7 @@
 			display: contents;
 		}
 		.filter-field--select .filter-label {
-			grid-column: 2;
+			grid-column: 1;
 		}
 		.filter-field--select select {
 			grid-column: 1 / -1;
@@ -442,14 +434,12 @@
 			<h1>Filtrer les peintures</h1>
 			<form class="filter-form" method="get" action="<?php echo rtrim(app_url(), '/'); ?>/peinture">
 				<label class="filter-field filter-field--search">
-					<span class="filter-index" aria-hidden="true">01</span>
 					<span class="filter-field__body">
 						<span class="filter-label">Recherche</span>
 						<input type="text" name="search" placeholder="Nom de la peinture" value="<?php echo htmlspecialchars($search ?? ''); ?>">
 					</span>
 				</label>
 				<label class="filter-field filter-field--select">
-					<span class="filter-index" aria-hidden="true">02</span>
 					<span class="filter-field__body">
 						<span class="filter-label">Catégorie</span>
 						<select name="category">
@@ -465,7 +455,6 @@
 					</span>
 				</label>
 				<label class="filter-field filter-field--select">
-					<span class="filter-index" aria-hidden="true">03</span>
 					<span class="filter-field__body">
 						<span class="filter-label">Technique utilisée</span>
 						<select name="technique">

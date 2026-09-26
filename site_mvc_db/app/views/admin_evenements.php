@@ -30,6 +30,7 @@
         .filter-bar select { min-width: 220px; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
         .filter-bar a { color: #222; font-weight: bold; text-decoration: none; }
         .filter-bar a:hover { text-decoration: underline; }
+        .admin-error { margin-bottom: 1.5rem; padding: 0.85rem 1rem; border-left: 4px solid #b00020; background: #fff0f2; color: #7a0016; }
     </style>
 </head>
 <body>
@@ -45,7 +46,12 @@
             <a href="<?php echo rtrim(app_url(), '/'); ?>/logout" style="color:#c00;">Déconnexion</a>
         </div>
         <h1>Administration des événements</h1>
+        <?php if ($adminError !== ''): ?>
+        <p class="admin-error" role="alert"><?php echo e($adminError); ?></p>
+        <?php endif; ?>
         <form method="post" action="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements/add" enctype="multipart/form-data">
+            <?php echo csrf_input(); ?>
+            <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo adminMaxImageBytes(); ?>">
             <input type="text" name="title" placeholder="Titre" required>
             <input type="text" name="image" placeholder="URL ou chemin de l'image">
             <input type="file" name="image_file" accept="image/*">
@@ -74,7 +80,9 @@
             ?>
             <?php if ($editEvenement): ?>
             <form method="post" action="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements/update" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="<?php echo $editEvenement['id']; ?>">
+                <?php echo csrf_input(); ?>
+                <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo adminMaxImageBytes(); ?>">
+                <input type="hidden" name="id" value="<?php echo (int)$editEvenement['id']; ?>">
                 <input type="text" name="title" placeholder="Titre" value="<?php echo htmlspecialchars($editEvenement['title']); ?>" required>
                 <input type="text" name="image" placeholder="URL ou chemin de l'image" value="<?php echo htmlspecialchars($editEvenement['image_path'] ?? $editEvenement['image']); ?>">
                 <input type="file" name="image_file" accept="image/*">
@@ -97,7 +105,7 @@
                     <select name="year" onchange="this.form.submit()">
                         <option value="">Toutes les années</option>
                         <?php foreach (($eventYears ?? []) as $year): ?>
-                        <option value="<?php echo $year; ?>" <?php echo $year === ($selectedYear ?? null) ? 'selected' : ''; ?>><?php echo $year; ?></option>
+                        <option value="<?php echo (int)$year; ?>" <?php echo $year === ($selectedYear ?? null) ? 'selected' : ''; ?>><?php echo (int)$year; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </label>
@@ -119,7 +127,7 @@
             <?php if (!empty($evenements)): ?>
             <?php foreach ($evenements as $e): ?>
             <tr>
-                <td><?php echo $e['id']; ?></td>
+                <td><?php echo (int)$e['id']; ?></td>
                 <td>
                     <?php if (!empty($e['image'])): ?>
                     <img src="<?php echo htmlspecialchars($e['image']); ?>" alt="" style="max-width:80px;">
@@ -130,9 +138,10 @@
                 <td><?php echo htmlspecialchars(formatEvenementDate($e['date'])); ?></td>
                 <td><?php echo htmlspecialchars($e['meta']); ?></td>
                 <td class="actions">
-                    <a href="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements?edit=<?php echo $e['id']; ?>" style="padding:0.5rem 1rem;background:#0066cc;color:#fff;text-decoration:none;border-radius:4px;margin-right:0.5rem;">Modifier</a>
+                    <a href="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements?edit=<?php echo (int)$e['id']; ?>" style="padding:0.5rem 1rem;background:#0066cc;color:#fff;text-decoration:none;border-radius:4px;margin-right:0.5rem;">Modifier</a>
                     <form method="post" action="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements/delete" style="display:inline;">
-                        <input type="hidden" name="id" value="<?php echo $e['id']; ?>">
+                        <?php echo csrf_input(); ?>
+                        <input type="hidden" name="id" value="<?php echo (int)$e['id']; ?>">
                         <button type="submit" onclick="return confirm('Supprimer cet événement ?');">Supprimer</button>
                     </form>
                 </td>

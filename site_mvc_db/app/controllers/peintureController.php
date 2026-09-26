@@ -16,5 +16,12 @@ function peinture() {
 
 function showPeinture(int $id) {
     $peinture = getPeintureById($id);
+
+    if (!$peinture) {
+        http_response_code(404);
+        echo 'Peinture introuvable.';
+        return;
+    }
+
     render('peinture_single', ['peinture' => $peinture]);
 }

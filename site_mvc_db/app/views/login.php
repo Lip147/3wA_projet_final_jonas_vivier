@@ -21,7 +21,7 @@
     <div class="login-box">
         <h1>Connexion admin</h1>
         <?php if (!empty($error)): ?>
-            <div class="error"><?php echo $error; ?></div>
+            <div class="error"><?php echo e($error); ?></div>
         <?php endif; ?>
         <form method="post">
             <input type="text" name="user" placeholder="Nom d'utilisateur" required>
