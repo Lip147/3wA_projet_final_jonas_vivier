@@ -3,18 +3,13 @@
 require __DIR__ . '/../models/coutureModel.php';
 
 function couture() {
-    $search = $_GET['search'] ?? '';
-    $category = $_GET['category'] ?? '';
+    $search = trim($_GET['search'] ?? '');
+    $category = trim($_GET['category'] ?? '');
+    $technique = trim($_GET['technique'] ?? '');
 
-    if (!empty($search)) {
-        $coutures = getCouturesBySearch($search);
-    } elseif (!empty($category)) {
-        $coutures = getCouturesByCategory($category);
-    } else {
-        $coutures = getCoutures();
-    }
-
+    $coutures = getCouturesByFilters($search, $category, $technique);
     $categories = getAllCoutureCategories();
+    $techniques = getAllCoutureTechniques();
 
     require_once __DIR__ . '/../views/couture.php';
 }

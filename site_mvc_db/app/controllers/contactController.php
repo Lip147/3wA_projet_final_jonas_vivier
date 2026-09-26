@@ -65,7 +65,7 @@ function sendContactMail(array $contactData) {
     $autoloadPath = __DIR__ . '/../../vendor/autoload.php';
 
     if (!file_exists($autoloadPath)) {
-        return 'PHPMailer n\'est pas encore installe. Lancez composer install dans le dossier site_mvc_db.';
+        return 'PHPMailer n\'est pas encore installé. Lancez composer install dans le dossier site_mvc_db.';
     }
 
     require_once $autoloadPath;
@@ -102,6 +102,6 @@ function sendContactMail(array $contactData) {
         $mail->send();
         return true;
     } catch (Exception $exception) {
-        return 'Le message n\'a pas pu etre envoye. Verifiez la configuration SMTP.';
+        return 'Le message n\'a pas pu être envoyé. Vérifiez la configuration SMTP.';
     }
 }

@@ -82,7 +82,7 @@
         <section class="site-footer__legal" aria-labelledby="footer-legal-title">
             <h2 id="footer-legal-title">Mentions légales et protection des données</h2>
             <ul>
-                <li>Éditeur du site : Annie Roger-Chamoulaud, informations légales complètes à compléter.</li>
+                <li>Éditrice du site : Annie Roger-Chamoulaud.</li>
                 <li>Les contenus, textes et images présentés sur ce site sont protégés par le droit d’auteur.</li>
                 <li>Les données transmises via le formulaire de contact sont utilisées uniquement pour répondre à votre demande.</li>
                 <li>Conformément au RGPD et à la loi Informatique et Libertés, vous pouvez demander l’accès, la rectification ou la suppression de vos données.</li>
@@ -92,7 +92,7 @@
         <section class="site-footer__contact" aria-labelledby="footer-contact-title">
             <h3 id="footer-contact-title">Me contacter</h3>
             <p>Pour toute demande concernant les œuvres, les expositions ou vos données personnelles, utilisez la page de contact.</p>
-            <a class="site-footer__button" href="<?php echo rtrim(app_url(), '/'); ?>/contact">Aller au contact</a>
+            <a class="site-footer__button" href="<?php echo rtrim(app_url(), '/'); ?>/contact">Accéder au formulaire</a>
         </section>
     </div>
 </footer>

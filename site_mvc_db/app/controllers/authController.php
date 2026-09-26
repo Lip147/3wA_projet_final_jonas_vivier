@@ -27,7 +27,7 @@ function login() {
             redirect_to('admin');
         }
 
-        $error = 'Identifiants invalides';
+        $error = 'Identifiants invalides.';
     }
 
     require __DIR__ . '/../views/login.php';

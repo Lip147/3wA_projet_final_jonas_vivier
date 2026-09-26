@@ -8,7 +8,7 @@ function categoryEntityConfig(string $entityType): array {
     ];
 
     if (!isset($configs[$entityType])) {
-        throw new InvalidArgumentException('Type de categorie inconnu.');
+        throw new InvalidArgumentException('Type de catégorie inconnu.');
     }
 
     return $configs[$entityType];

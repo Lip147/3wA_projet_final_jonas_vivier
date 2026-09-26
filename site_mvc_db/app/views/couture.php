@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<?php echo htmlspecialchars($pageDescription ?? "Portfolio artistique d'Annie Roger Chamoulaud."); ?>">
+    <meta name="description" content="<?php echo htmlspecialchars($pageDescription ?? "Portfolio artistique d'Annie Roger-Chamoulaud."); ?>">
     <meta name="author" content="Jonas Vivier">
     <title>Arts textiles</title>
     <link rel="stylesheet" href="<?php echo rtrim(app_url(), '/'); ?>/styles/style.css?v=<?php echo filemtime(__DIR__ . '/../../public/styles/style.css'); ?>">
@@ -24,45 +24,158 @@
             top: var(--filter-sticky-offset);
             z-index: 5;
             min-height: 605px;
-            background: #fff;
-            color: #000;
-            padding: 4rem 1.8rem 2rem;
+            border-left: 1px solid rgba(255, 255, 255, 0.42);
+            background: #000;
+            color: #fff;
+            padding: 2.8rem 1.8rem 2.2rem 2rem;
         }
         .paintings-filter h1 {
-            margin: 0 0 2rem;
-            font-size: clamp(1.8rem, 2.5vw, 2.6rem);
+            margin: 0 0 2.4rem;
+            padding-bottom: 1.4rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.38);
+            font-size: 1.65rem;
             font-weight: 400;
-            line-height: 1.15;
+            line-height: 1.2;
         }
         .filter-form {
             display: grid;
-            gap: 1.25rem;
+            gap: 2rem;
         }
-        .filter-form label {
+        .filter-field {
             display: grid;
-            gap: 0.45rem;
-            font-size: 0.95rem;
+            grid-template-columns: 1.8rem minmax(0, 1fr);
+            gap: 0.7rem;
+            align-items: start;
+        }
+        .filter-index {
+            padding-top: 0.15rem;
+            color: rgba(255, 255, 255, 0.46);
+            font-size: 0.68rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .filter-field__body {
+            display: grid;
+            gap: 0.55rem;
+            min-width: 0;
+        }
+        .filter-field--search {
+            row-gap: 0.75rem;
+        }
+        .filter-field--search .filter-field__body {
+            display: contents;
+        }
+        .filter-field--search .filter-label {
+            grid-column: 2;
+        }
+        .filter-field--search input {
+            grid-column: 1 / -1;
+            min-height: 54px;
+            padding: 0.75rem 0.8rem;
+            transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+        }
+        .filter-form .filter-field--search input:focus {
+            border-bottom-color: #fff;
+            outline: 0;
+        }
+        .filter-field--search:hover input,
+        .filter-field--search:focus-within input,
+        .filter-field--search.is-filled input {
+            background: #fff;
+            color: #000;
+        }
+        .filter-field--search:hover input::placeholder,
+        .filter-field--search:focus-within input::placeholder,
+        .filter-field--search.is-filled input::placeholder {
+            color: rgba(0, 0, 0, 0.58);
+        }
+        .filter-field--select {
+            position: relative;
+            row-gap: 0.75rem;
+        }
+        .filter-field--select::after {
+            content: "";
+            position: absolute;
+            right: 0.2rem;
+            bottom: 1.25rem;
+            width: 0.4rem;
+            height: 0.4rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.72);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.72);
+            pointer-events: none;
+            transform: rotate(45deg);
+            transition: border-color 180ms ease;
+        }
+        .filter-field--select:hover::after,
+        .filter-field--select:focus-within::after,
+        .filter-field--select.is-filled::after {
+            border-color: #000;
+        }
+        .filter-field--select .filter-field__body {
+            display: contents;
+        }
+        .filter-field--select .filter-label {
+            grid-column: 2;
+        }
+        .filter-field--select select {
+            grid-column: 1 / -1;
+            min-height: 54px;
+            border: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.58);
+            padding: 0.75rem 2rem 0.75rem 0.8rem;
+            -webkit-appearance: none;
+            appearance: none;
+            transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+        }
+        .filter-field--select select:hover {
+            border-bottom-color: #fff;
+        }
+        .filter-form .filter-field--select select:focus {
+            border-bottom-color: #fff;
+            outline: 0;
+        }
+        .filter-field--select:hover select,
+        .filter-field--select:focus-within select,
+        .filter-field--select.is-filled select {
+            background: #fff;
+            color: #000;
+        }
+        .filter-label {
+            color: rgba(255, 255, 255, 0.68);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
         }
         .filter-form input,
         .filter-form select {
             box-sizing: border-box;
             width: 100%;
             min-height: 44px;
-            border: 1px solid #111;
-            background: #fff;
-            color: #000;
-            padding: 0.75rem;
+            border: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.48);
+            border-radius: 0;
+            background: #000;
+            color: #fff;
+            padding: 0.55rem 0;
             font: inherit;
+        }
+        .filter-form input::placeholder {
+            color: rgba(255, 255, 255, 0.48);
+        }
+        .filter-form select option {
+            background: #000;
+            color: #fff;
         }
         .filter-form input:focus,
         .filter-form select:focus {
-            outline: 2px solid #000;
-            outline-offset: 2px;
+            border-color: #fff;
+            outline: 1px solid rgba(255, 255, 255, 0.72);
+            outline-offset: 4px;
         }
         .filter-actions {
             display: grid;
-            gap: 0.75rem;
-            margin-top: 0.5rem;
+            gap: 1rem;
+            margin-top: 0.75rem;
         }
         .filter-actions button,
         .filter-actions a {
@@ -72,16 +185,36 @@
             justify-content: center;
             width: 100%;
             min-height: 44px;
-            border: 1px solid #000;
-            background: #000;
-            color: #fff;
+            border: 1px solid #fff;
+            border-radius: 0;
+            background: #fff;
+            color: #000;
             text-decoration: none;
             font: inherit;
             cursor: pointer;
+            transition: background-color 180ms ease, color 180ms ease;
+        }
+        .filter-actions button:hover,
+        .filter-actions button:focus-visible {
+            background: #000;
+            color: #fff;
         }
         .filter-actions a {
-            background: #fff;
-            color: #000;
+            justify-self: center;
+            width: auto;
+            min-height: auto;
+            border: 0;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.62);
+            font-size: 0.84rem;
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            text-underline-offset: 0.3rem;
+        }
+        .filter-actions a:hover,
+        .filter-actions a:focus-visible {
+            color: #fff;
+            text-decoration-color: currentColor;
         }
         .gallery-grid {
             display: grid;
@@ -246,6 +379,15 @@
                 min-height: auto;
                 padding: 2rem;
             }
+            .filter-form {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .filter-actions {
+                grid-column: 1 / -1;
+                grid-template-columns: minmax(180px, 260px) auto;
+                align-items: center;
+                justify-content: start;
+            }
             .gallery-grid {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
                 padding-bottom: 2rem;
@@ -266,6 +408,13 @@
             }
         }
         @media (max-width: 700px) {
+            .filter-form {
+                grid-template-columns: 1fr;
+            }
+            .filter-actions {
+                grid-column: auto;
+                grid-template-columns: 1fr;
+            }
             .gallery-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
@@ -290,15 +439,20 @@
     </nav>
     <main class="paintings-layout">
         <aside class="paintings-filter">
-            <h1>Barre de recherche</h1>
+            <h1>Filtrer les arts textiles</h1>
             <form class="filter-form" method="get" action="<?php echo rtrim(app_url(), '/'); ?>/couture">
-                <label>
-                    Recherche
-                    <input type="text" name="search" placeholder="Nom du textile" value="<?php echo htmlspecialchars($search ?? ''); ?>">
+                <label class="filter-field filter-field--search">
+                    <span class="filter-index" aria-hidden="true">01</span>
+                    <span class="filter-field__body">
+                        <span class="filter-label">Recherche</span>
+                        <input type="text" name="search" placeholder="Nom du textile" value="<?php echo htmlspecialchars($search ?? ''); ?>">
+                    </span>
                 </label>
-                <label>
-                    Catégorie
-                    <select name="category">
+                <label class="filter-field filter-field--select">
+                    <span class="filter-index" aria-hidden="true">02</span>
+                    <span class="filter-field__body">
+                        <span class="filter-label">Catégorie</span>
+                        <select name="category">
                         <option value="">Toutes les catégories</option>
                         <?php if (!empty($categories)): ?>
                         <?php foreach ($categories as $cat): ?>
@@ -307,7 +461,22 @@
                         </option>
                         <?php endforeach; ?>
                         <?php endif; ?>
-                    </select>
+                        </select>
+                    </span>
+                </label>
+                <label class="filter-field filter-field--select">
+                    <span class="filter-index" aria-hidden="true">03</span>
+                    <span class="filter-field__body">
+                        <span class="filter-label">Technique utilisée</span>
+                        <select name="technique">
+                        <option value="">Toutes les techniques</option>
+                        <?php foreach (($techniques ?? []) as $techniqueOption): ?>
+                        <option value="<?php echo htmlspecialchars($techniqueOption); ?>" <?php echo (($technique ?? '') === $techniqueOption) ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($techniqueOption); ?>
+                        </option>
+                        <?php endforeach; ?>
+                        </select>
+                    </span>
                 </label>
                 <div class="filter-actions">
                     <button type="submit">Filtrer</button>
@@ -359,6 +528,17 @@
         </div>
     </div>
     <script>
+        document.querySelectorAll('.filter-form .filter-field').forEach((field) => {
+            const control = field.querySelector('input, select');
+            const updateFilledState = () => {
+                field.classList.toggle('is-filled', control.value.trim() !== '');
+            };
+
+            control.addEventListener('input', updateFilledState);
+            control.addEventListener('change', updateFilledState);
+            updateFilledState();
+        });
+
         const lightbox = document.getElementById('image-lightbox');
         const lightboxImage = lightbox.querySelector('img');
         const galleryImages = Array.from(document.querySelectorAll('.gallery-image'));

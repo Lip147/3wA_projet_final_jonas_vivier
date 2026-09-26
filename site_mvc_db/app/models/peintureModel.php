@@ -78,6 +78,43 @@ function getPeinturesByCategory(string $category) {
     return $stmt->fetchAll();
 }
 
+function getPeinturesByFilters(string $search, string $category, string $technique) {
+    global $pdo;
+
+    $conditions = [];
+    $parameters = [];
+
+    if ($search !== '') {
+        $conditions[] = "(p.title LIKE ? OR p.description LIKE ?)";
+        $searchTerm = '%' . $search . '%';
+        $parameters[] = $searchTerm;
+        $parameters[] = $searchTerm;
+    }
+
+    if ($category !== '') {
+        $conditions[] = "EXISTS (
+            SELECT 1
+            FROM peinture_categorie pc
+            INNER JOIN categories c ON c.id_categorie = pc.id_categorie
+            WHERE pc.id_peinture = p.id_peinture
+            AND (c.name = ? OR c.slug = ?)
+        )";
+        $parameters[] = $category;
+        $parameters[] = slugifyCategoryName($category);
+    }
+
+    if ($technique !== '') {
+        $conditions[] = "p.technique = ?";
+        $parameters[] = $technique;
+    }
+
+    $where = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
+    $stmt = $pdo->prepare(peintureBaseSelect($where) . " ORDER BY p.id_peinture DESC");
+    $stmt->execute($parameters);
+
+    return $stmt->fetchAll();
+}
+
 function getPeinturesBySearch(string $search) {
     global $pdo;
 
@@ -95,6 +132,19 @@ function getPeinturesBySearch(string $search) {
 
 function getAllCategories() {
     return getCategoriesForEntityType('peinture');
+}
+
+function getAllPaintingTechniques() {
+    global $pdo;
+
+    $stmt = $pdo->query(
+        "SELECT DISTINCT technique
+         FROM peintures
+         WHERE technique IS NOT NULL AND TRIM(technique) <> ''
+         ORDER BY technique ASC"
+    );
+
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
 function getPeintureById(int $id) {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<?php echo htmlspecialchars($pageDescription ?? "Portfolio artistique d'Annie Roger Chamoulaud."); ?>">
+    <meta name="description" content="<?php echo htmlspecialchars($pageDescription ?? "Portfolio artistique d'Annie Roger-Chamoulaud."); ?>">
     <meta name="author" content="Jonas Vivier">
     <title>&Eacute;v&eacute;nements</title>
     <link rel="stylesheet" href="<?php echo rtrim(app_url(), '/'); ?>/styles/style.css?v=<?php echo filemtime(__DIR__ . '/../../public/styles/style.css'); ?>">
@@ -451,7 +451,7 @@
     <main class="events-page">
         <header class="events-header">
             <h1>&Eacute;v&eacute;nements</h1>
-            <p class="events-intro">Expositions, rencontres et rendez-vous autour du travail d&rsquo;Annie Roger Chamoulaud.</p>
+            <p class="events-intro">Expositions, rencontres et rendez-vous autour du travail d&rsquo;Annie Roger-Chamoulaud.</p>
         </header>
 
         <?php if (!empty($evenements)): ?>

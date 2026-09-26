@@ -9,7 +9,7 @@ function mediaEntityConfig(string $entityType): array {
     ];
 
     if (!isset($configs[$entityType])) {
-        throw new InvalidArgumentException('Type de media inconnu.');
+        throw new InvalidArgumentException('Type de média inconnu.');
     }
 
     return $configs[$entityType];

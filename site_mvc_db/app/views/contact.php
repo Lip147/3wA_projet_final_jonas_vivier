@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<?php echo htmlspecialchars($pageDescription ?? "Portfolio artistique d'Annie Roger Chamoulaud."); ?>">
+    <meta name="description" content="<?php echo htmlspecialchars($pageDescription ?? "Portfolio artistique d'Annie Roger-Chamoulaud."); ?>">
     <meta name="author" content="Jonas Vivier">
     <title>Contact</title>
     <link rel="stylesheet" href="<?php echo rtrim(app_url(), '/'); ?>/styles/style.css?v=<?php echo filemtime(__DIR__ . '/../../public/styles/style.css'); ?>">
@@ -15,14 +15,14 @@
             <a href="<?php echo rtrim(app_url(), '/'); ?>/home">Accueil</a>
             <a href="<?php echo rtrim(app_url(), '/'); ?>/peinture">Peintures</a>
             <a href="<?php echo rtrim(app_url(), '/'); ?>/couture">Arts textiles</a>
-            <a href="<?php echo rtrim(app_url(), '/'); ?>/expositions">&Eacute;venements</a>
+            <a href="<?php echo rtrim(app_url(), '/'); ?>/expositions">&Eacute;v&eacute;nements</a>
             <a href="<?php echo rtrim(app_url(), '/'); ?>/biographie">Biographie</a>
         </div>
     </nav>
     <main class="contact-layout">
         <section class="contact-intro">
             <h1>Contact</h1>
-            <p>Formulaire temporaire pour préparer la future prise de contact.</p>
+            <p>Pour toute question concernant une œuvre ou une exposition, utilisez ce formulaire.</p>
         </section>
         <form class="contact-form" action="<?php echo rtrim(app_url(), '/'); ?>/contact" method="post">
             <?php if (!empty($contactSuccess)): ?>

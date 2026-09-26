@@ -77,6 +77,43 @@ function getCouturesByCategory(string $category) {
     return $stmt->fetchAll();
 }
 
+function getCouturesByFilters(string $search, string $category, string $technique) {
+    global $pdo;
+
+    $conditions = [];
+    $parameters = [];
+
+    if ($search !== '') {
+        $conditions[] = "(c.title LIKE ? OR c.description LIKE ?)";
+        $searchTerm = '%' . $search . '%';
+        $parameters[] = $searchTerm;
+        $parameters[] = $searchTerm;
+    }
+
+    if ($category !== '') {
+        $conditions[] = "EXISTS (
+            SELECT 1
+            FROM couture_categorie cc
+            INNER JOIN categories cat ON cat.id_categorie = cc.id_categorie
+            WHERE cc.id_couture = c.id_couture
+            AND (cat.name = ? OR cat.slug = ?)
+        )";
+        $parameters[] = $category;
+        $parameters[] = slugifyCategoryName($category);
+    }
+
+    if ($technique !== '') {
+        $conditions[] = "c.material = ?";
+        $parameters[] = $technique;
+    }
+
+    $where = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
+    $stmt = $pdo->prepare(coutureBaseSelect($where) . " ORDER BY c.id_couture DESC");
+    $stmt->execute($parameters);
+
+    return $stmt->fetchAll();
+}
+
 function getCouturesBySearch(string $search) {
     global $pdo;
 
@@ -94,6 +131,19 @@ function getCouturesBySearch(string $search) {
 
 function getAllCoutureCategories() {
     return getCategoriesForEntityType('couture');
+}
+
+function getAllCoutureTechniques() {
+    global $pdo;
+
+    $stmt = $pdo->query(
+        "SELECT DISTINCT material
+         FROM coutures
+         WHERE material IS NOT NULL AND TRIM(material) <> ''
+         ORDER BY material ASC"
+    );
+
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
 function addCouture(array $data) {
