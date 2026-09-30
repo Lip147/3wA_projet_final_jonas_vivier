@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription ?? "Portfolio artistique d'Annie Roger-Chamoulaud."); ?>">
     <meta name="author" content="Jonas Vivier">
+    <link rel="icon" type="image/png" href="<?php echo rtrim(app_url(), '/'); ?>/images/logo_arch_fond_blanc2.png">
     <title>Admin - Événements</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; }
@@ -16,9 +17,11 @@
         tr:nth-child(even) { background: #f9f9f9; }
         .actions { text-align: center; }
         form { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
-        form input, form textarea { flex: 1 1 150px; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
+        form input, form textarea, form select { flex: 1 1 150px; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
         .date-field { display: grid; flex: 1 1 180px; gap: 0.35rem; color: #555; font-size: 0.8rem; font-weight: bold; }
-        .date-field input { box-sizing: border-box; width: 100%; color: #222; font: inherit; }
+        .date-field input, .date-field select { box-sizing: border-box; width: 100%; color: #222; font: inherit; }
+        .date-period { display: flex; flex: 2 1 380px; gap: 1rem; }
+        .date-period[hidden] { display: none; }
         form input[type="file"] { background: #fafafa; }
         form button { padding: 0.5rem 1.5rem; background: #222; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
         form button:hover { background: #444; }
@@ -49,7 +52,7 @@
         <?php if ($adminError !== ''): ?>
         <p class="admin-error" role="alert"><?php echo e($adminError); ?></p>
         <?php endif; ?>
-        <form method="post" action="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements/add" enctype="multipart/form-data">
+        <form class="event-form" method="post" action="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements/add" enctype="multipart/form-data">
             <?php echo csrf_input(); ?>
             <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo adminMaxImageBytes(); ?>">
             <input type="text" name="title" placeholder="Titre" required>
@@ -57,9 +60,20 @@
             <input type="file" name="image_file" accept="image/*">
             <input type="text" name="description" placeholder="Description">
             <label class="date-field">
-                Date de l'événement
-                <input type="date" name="date">
+                Précision de la période
+                <select name="date_precision" class="date-precision">
+                    <option value="day">Dates précises</option>
+                    <option value="month">Mois uniquement</option>
+                </select>
             </label>
+            <div class="date-period" data-date-period="day">
+                <label class="date-field">Date de début<input type="date" name="date"></label>
+                <label class="date-field">Date de fin (facultative)<input type="date" name="end_date"></label>
+            </div>
+            <div class="date-period" data-date-period="month" hidden>
+                <label class="date-field">Mois de début<input type="month" name="start_month" disabled></label>
+                <label class="date-field">Mois de fin (facultatif)<input type="month" name="end_month" disabled></label>
+            </div>
             <input type="text" name="meta" placeholder="Méta (ex. : lieu)">
             <button type="submit">Ajouter</button>
         </form>
@@ -79,7 +93,12 @@
             }
             ?>
             <?php if ($editEvenement): ?>
-            <form method="post" action="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements/update" enctype="multipart/form-data">
+            <?php
+            $editPrecision = $editEvenement['date_precision'] === 'month' ? 'month' : 'day';
+            $editStartMonth = !empty($editEvenement['date']) ? substr($editEvenement['date'], 0, 7) : '';
+            $editEndMonth = !empty($editEvenement['end_date']) ? substr($editEvenement['end_date'], 0, 7) : $editStartMonth;
+            ?>
+            <form class="event-form" method="post" action="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements/update" enctype="multipart/form-data">
                 <?php echo csrf_input(); ?>
                 <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo adminMaxImageBytes(); ?>">
                 <input type="hidden" name="id" value="<?php echo (int)$editEvenement['id']; ?>">
@@ -88,9 +107,20 @@
                 <input type="file" name="image_file" accept="image/*">
                 <input type="text" name="description" placeholder="Description" value="<?php echo htmlspecialchars($editEvenement['description']); ?>">
                 <label class="date-field">
-                    Date de l'événement
-                    <input type="date" name="date" value="<?php echo htmlspecialchars($editEvenement['date']); ?>">
+                    Précision de la période
+                    <select name="date_precision" class="date-precision">
+                        <option value="day" <?php echo $editPrecision === 'day' ? 'selected' : ''; ?>>Dates précises</option>
+                        <option value="month" <?php echo $editPrecision === 'month' ? 'selected' : ''; ?>>Mois uniquement</option>
+                    </select>
                 </label>
+                <div class="date-period" data-date-period="day" <?php echo $editPrecision === 'day' ? '' : 'hidden'; ?>>
+                    <label class="date-field">Date de début<input type="date" name="date" value="<?php echo htmlspecialchars($editEvenement['date']); ?>" <?php echo $editPrecision === 'day' ? '' : 'disabled'; ?>></label>
+                    <label class="date-field">Date de fin (facultative)<input type="date" name="end_date" value="<?php echo htmlspecialchars($editEvenement['end_date'] ?? ''); ?>" <?php echo $editPrecision === 'day' ? '' : 'disabled'; ?>></label>
+                </div>
+                <div class="date-period" data-date-period="month" <?php echo $editPrecision === 'month' ? '' : 'hidden'; ?>>
+                    <label class="date-field">Mois de début<input type="month" name="start_month" value="<?php echo htmlspecialchars($editStartMonth); ?>" <?php echo $editPrecision === 'month' ? '' : 'disabled'; ?>></label>
+                    <label class="date-field">Mois de fin (facultatif)<input type="month" name="end_month" value="<?php echo htmlspecialchars($editEndMonth); ?>" <?php echo $editPrecision === 'month' ? '' : 'disabled'; ?>></label>
+                </div>
                 <input type="text" name="meta" placeholder="Méta (ex. : lieu)" value="<?php echo htmlspecialchars($editEvenement['meta']); ?>">
                 <button type="submit">Mettre à jour</button>
                 <a href="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements" style="padding:0.5rem 1.5rem;background:#999;color:#fff;text-decoration:none;border-radius:4px;cursor:pointer;">Annuler</a>
@@ -120,7 +150,7 @@
                 <th>Image</th>
                 <th>Titre</th>
                 <th>Description</th>
-                <th>Date</th>
+                <th>Période</th>
                 <th>Méta</th>
                 <th class="actions">Actions</th>
             </tr>
@@ -135,7 +165,7 @@
                 </td>
                 <td><?php echo htmlspecialchars($e['title']); ?></td>
                 <td><?php echo htmlspecialchars($e['description']); ?></td>
-                <td><?php echo htmlspecialchars(formatEvenementDate($e['date'])); ?></td>
+                <td><?php echo htmlspecialchars(formatEvenementPeriod($e)); ?></td>
                 <td><?php echo htmlspecialchars($e['meta']); ?></td>
                 <td class="actions">
                     <a href="<?php echo rtrim(app_url(), '/'); ?>/admin/evenements?edit=<?php echo (int)$e['id']; ?>" style="padding:0.5rem 1rem;background:#0066cc;color:#fff;text-decoration:none;border-radius:4px;margin-right:0.5rem;">Modifier</a>
@@ -151,5 +181,24 @@
         </table>
     </div>
     <?php require __DIR__ . '/partials/legal_footer.php'; ?>
+    <script>
+        document.querySelectorAll('.event-form').forEach((form) => {
+            const precisionSelect = form.querySelector('.date-precision');
+            const periodGroups = form.querySelectorAll('[data-date-period]');
+
+            const updateDateFields = () => {
+                periodGroups.forEach((group) => {
+                    const isActive = group.dataset.datePeriod === precisionSelect.value;
+                    group.hidden = !isActive;
+                    group.querySelectorAll('input').forEach((input) => {
+                        input.disabled = !isActive;
+                    });
+                });
+            };
+
+            precisionSelect.addEventListener('change', updateDateFields);
+            updateDateFields();
+        });
+    </script>
 </body>
 </html>

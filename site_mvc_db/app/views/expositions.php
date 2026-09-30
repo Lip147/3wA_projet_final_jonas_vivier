@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription ?? "Portfolio artistique d'Annie Roger-Chamoulaud."); ?>">
     <meta name="author" content="Jonas Vivier">
-    <title>&Eacute;v&eacute;nements</title>
+    <link rel="icon" type="image/png" href="<?php echo rtrim(app_url(), '/'); ?>/images/logo_arch_fond_blanc2.png">
+    <title>Expositions</title>
     <link rel="stylesheet" href="<?php echo rtrim(app_url(), '/'); ?>/styles/style.css?v=<?php echo filemtime(__DIR__ . '/../../public/styles/style.css'); ?>">
     <style>
         .events-page {
@@ -67,7 +68,7 @@
 
         .events-year-nav {
             display: grid;
-            grid-template-columns: 36px minmax(0, 1fr) 36px;
+            grid-template-columns: 36px minmax(0, 1fr) 36px auto;
             gap: 0.6rem;
             align-items: center;
             flex: 0 0 auto;
@@ -92,14 +93,29 @@
             transition: color 180ms ease, border-color 180ms ease;
         }
 
+        .events-upcoming-link {
+            padding: 0.55rem 0.1rem;
+            border-bottom: 1px solid transparent;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.92rem;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: color 180ms ease, border-color 180ms ease;
+        }
+
         .events-year-link:hover,
         .events-year-link:focus-visible,
-        .events-year-link.is-selected {
+        .events-year-link.is-selected,
+        .events-upcoming-link:hover,
+        .events-upcoming-link:focus-visible,
+        .events-upcoming-link.is-selected {
             border-color: currentColor;
             color: #fff;
         }
 
         .events-year-link:focus-visible,
+        .events-upcoming-link:focus-visible,
         .events-year-arrow:focus-visible {
             outline: 1px solid rgba(255, 255, 255, 0.7);
             outline-offset: 3px;
@@ -237,6 +253,19 @@
             text-align: right;
         }
 
+        .event-card--no-image,
+        .event-card--image-left.event-card--no-image {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .event-card--image-right.event-card--no-image .event-content {
+            grid-column: 1;
+        }
+
+        .event-card--image-left.event-card--no-image .event-content {
+            grid-column: 2;
+        }
+
         .event-content {
             display: grid;
             gap: 1.1rem;
@@ -321,16 +350,6 @@
             filter: saturate(1) contrast(1.02);
         }
 
-        .event-media-placeholder {
-            display: grid;
-            place-items: center;
-            height: 100%;
-            min-height: 260px;
-            color: rgba(255, 255, 255, 0.45);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-        }
-
         .events-empty {
             margin: 0;
             border: 1px solid rgba(255, 255, 255, 0.35);
@@ -406,6 +425,11 @@
                 gap: 1.75rem;
             }
 
+            .event-card--no-image,
+            .event-card--image-left.event-card--no-image {
+                grid-template-columns: 1fr;
+            }
+
             .event-card .event-media,
             .event-card--image-left .event-media {
                 order: 1;
@@ -414,6 +438,7 @@
             .event-card .event-content,
             .event-card--image-left .event-content {
                 order: 2;
+                grid-column: 1;
             }
 
             .event-card--image-left .event-content {
@@ -431,6 +456,7 @@
             .events-index-item::before,
             .events-index-link,
             .events-year-link,
+            .events-upcoming-link,
             .events-year-arrow {
                 transition: none;
             }
@@ -450,16 +476,19 @@
     </nav>
     <main class="events-page">
         <header class="events-header">
-            <h1>&Eacute;v&eacute;nements</h1>
+            <h1>Expositions</h1>
             <p class="events-intro">Expositions, rencontres et rendez-vous autour du travail d&rsquo;Annie Roger-Chamoulaud.</p>
         </header>
 
-        <?php if (!empty($evenements)): ?>
-        <nav class="events-index" aria-label="Navigation des événements">
+        <?php if (!empty($eventYears)): ?>
+        <nav class="events-index" aria-label="Navigation des expositions">
             <?php
             $selectedYearIndex = array_search($selectedYear, $eventYears, true);
+            if ($selectedYearIndex === false) {
+                $selectedYearIndex = count($eventYears) - 1;
+            }
             $yearWindowStart = min(
-                max(0, (int)$selectedYearIndex - 1),
+                max(0, $selectedYearIndex - 1),
                 max(0, count($eventYears) - 3)
             );
             ?>
@@ -475,7 +504,11 @@
                     <?php endforeach; ?>
                 </div>
                 <button class="events-year-arrow events-year-arrow--newer" type="button" aria-label="Afficher les années plus récentes" title="Années plus récentes">&#8594;</button>
+                <a class="events-upcoming-link<?php echo $showUpcoming ? ' is-selected' : ''; ?>"
+                   href="<?php echo rtrim(app_url(), '/'); ?>/expositions?filter=upcoming"
+                   <?php echo $showUpcoming ? 'aria-current="page"' : ''; ?>>À venir</a>
             </div>
+            <?php if (!empty($evenements)): ?>
             <ol class="events-index-list">
                 <?php foreach ($evenements as $index => $event): ?>
                 <li class="events-index-item<?php echo $index === 0 ? ' is-active' : ''; ?>">
@@ -483,22 +516,26 @@
                 </li>
                 <?php endforeach; ?>
             </ol>
+            <?php endif; ?>
         </nav>
         <?php endif; ?>
 
-        <section class="events-list" aria-label="Liste des &eacute;v&eacute;nements">
+        <section class="events-list" aria-label="Liste des expositions">
             <?php if (empty($evenements)): ?>
-            <p class="events-empty">Aucun &eacute;v&eacute;nement enregistr&eacute; pour le moment.</p>
+            <p class="events-empty">Aucune exposition enregistr&eacute;e pour le moment.</p>
             <?php else: ?>
             <?php foreach ($evenements as $index => $event): ?>
-            <?php $isImageLeft = $index % 2 === 1; ?>
-            <article id="event-<?php echo (int)$event['id']; ?>" class="event-card <?php echo $isImageLeft ? 'event-card--image-left' : 'event-card--image-right'; ?>">
+            <?php
+            $isImageLeft = $index % 2 === 1;
+            $hasImage = !empty($event['image']);
+            ?>
+            <article id="event-<?php echo (int)$event['id']; ?>" class="event-card <?php echo $isImageLeft ? 'event-card--image-left' : 'event-card--image-right'; ?><?php echo $hasImage ? '' : ' event-card--no-image'; ?>">
                 <div class="event-content">
                     <span class="event-number" aria-hidden="true"><?php echo str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT); ?></span>
                     <h2 class="event-title"><?php echo htmlspecialchars($event['title']); ?></h2>
 
                     <?php if (!empty($event['date'])): ?>
-                    <time class="event-date" datetime="<?php echo htmlspecialchars($event['date']); ?>"><?php echo htmlspecialchars(formatEvenementDate($event['date'])); ?></time>
+                    <time class="event-date" datetime="<?php echo htmlspecialchars($event['date']); ?>"><?php echo htmlspecialchars(formatEvenementPeriod($event)); ?></time>
                     <?php endif; ?>
 
                     <?php if (!empty($event['description'])): ?>
@@ -512,13 +549,11 @@
                     <?php endif; ?>
                 </div>
 
+                <?php if ($hasImage): ?>
                 <div class="event-media">
-                    <?php if (!empty($event['image'])): ?>
                     <img src="<?php echo htmlspecialchars($event['image']); ?>" alt="<?php echo htmlspecialchars($event['title']); ?>">
-                    <?php else: ?>
-                    <div class="event-media-placeholder">Photo</div>
-                    <?php endif; ?>
                 </div>
+                <?php endif; ?>
             </article>
             <?php endforeach; ?>
             <?php endif; ?>
@@ -533,7 +568,8 @@
         const olderYearsButton = document.querySelector('.events-year-arrow--older');
 
         if (yearLinks.length > 0 && newerYearsButton && olderYearsButton) {
-            const selectedYearIndex = yearLinks.findIndex((link) => link.classList.contains('is-selected'));
+            const activeYearIndex = yearLinks.findIndex((link) => link.classList.contains('is-selected'));
+            const selectedYearIndex = activeYearIndex >= 0 ? activeYearIndex : yearLinks.length - 1;
             const maximumWindowStart = Math.max(0, yearLinks.length - 3);
             let yearWindowStart = Math.min(Math.max(0, selectedYearIndex - 1), maximumWindowStart);
 

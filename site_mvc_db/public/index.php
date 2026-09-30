@@ -63,5 +63,6 @@ if (array_key_exists($page, $routes)) {
         $route['action']($id);
     }
 } else {
-    echo "404";
+    http_response_code(404);
+    echo '404';
 }

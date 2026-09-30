@@ -229,6 +229,14 @@ body{background:black;color:white;}
     gap: 1.1rem;
 }
 
+.contact-honeypot {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
 .contact-alert {
     margin: 0;
     border: 1px solid #303030;

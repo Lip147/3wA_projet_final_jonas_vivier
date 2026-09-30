@@ -21,6 +21,61 @@ function normalizeEvenementDate($date): ?string {
     return $date;
 }
 
+function normalizeEvenementMonth($month): ?string {
+    $month = trim((string)$month);
+    if ($month === '') {
+        return null;
+    }
+
+    $parsedMonth = DateTimeImmutable::createFromFormat('!Y-m', $month);
+    $errors = DateTimeImmutable::getLastErrors();
+    if (
+        $parsedMonth === false
+        || ($errors !== false && ($errors['warning_count'] > 0 || $errors['error_count'] > 0))
+        || $parsedMonth->format('Y-m') !== $month
+    ) {
+        throw new InvalidArgumentException('Le mois de l\'exposition doit être valide.');
+    }
+
+    return $month;
+}
+
+function normalizeEvenementPeriod(array $data): array {
+    $precision = ($data['date_precision'] ?? 'day') === 'month' ? 'month' : 'day';
+
+    if ($precision === 'month') {
+        $startMonth = normalizeEvenementMonth($data['start_month'] ?? null);
+        $endMonth = normalizeEvenementMonth($data['end_month'] ?? null) ?? $startMonth;
+
+        if ($startMonth === null) {
+            return ['date' => null, 'end_date' => null, 'date_precision' => 'month'];
+        }
+
+        if ($endMonth < $startMonth) {
+            throw new InvalidArgumentException('Le mois de fin doit être postérieur au mois de début.');
+        }
+
+        $endDate = DateTimeImmutable::createFromFormat('!Y-m-d', $endMonth . '-01');
+
+        return [
+            'date' => $startMonth . '-01',
+            'end_date' => $endDate->modify('last day of this month')->format('Y-m-d'),
+            'date_precision' => 'month',
+        ];
+    }
+
+    $startDate = normalizeEvenementDate($data['date'] ?? null);
+    $endDate = normalizeEvenementDate($data['end_date'] ?? null);
+    if ($startDate === null && $endDate !== null) {
+        throw new InvalidArgumentException('Une date de début est nécessaire lorsqu’une date de fin est indiquée.');
+    }
+    if ($startDate !== null && $endDate !== null && $endDate < $startDate) {
+        throw new InvalidArgumentException('La date de fin doit être postérieure à la date de début.');
+    }
+
+    return ['date' => $startDate, 'end_date' => $endDate, 'date_precision' => 'day'];
+}
+
 function formatEvenementDate($date): string {
     $date = trim((string)$date);
     if ($date === '') {
@@ -40,6 +95,53 @@ function formatEvenementDate($date): string {
     return $parsedDate->format('j') . ' ' . $months[(int)$parsedDate->format('n')] . ' ' . $parsedDate->format('Y');
 }
 
+function formatEvenementMonth($date, bool $includeYear = true): string {
+    $parsedDate = DateTimeImmutable::createFromFormat('!Y-m-d', (string)$date);
+    if ($parsedDate === false) {
+        return (string)$date;
+    }
+
+    $months = [
+        1 => 'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+        'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre',
+    ];
+    $label = $months[(int)$parsedDate->format('n')];
+
+    return $includeYear ? $label . ' ' . $parsedDate->format('Y') : $label;
+}
+
+function formatEvenementPeriod(array $event): string {
+    $startDate = $event['date'] ?? null;
+    $endDate = $event['end_date'] ?? null;
+    if (empty($startDate)) {
+        return '';
+    }
+
+    if (($event['date_precision'] ?? 'day') === 'month') {
+        if (empty($endDate) || substr($startDate, 0, 7) === substr($endDate, 0, 7)) {
+            return ucfirst(formatEvenementMonth($startDate));
+        }
+
+        $sameYear = substr($startDate, 0, 4) === substr($endDate, 0, 4);
+        $startMonthLabel = formatEvenementMonth($startDate, !$sameYear);
+        $prefix = preg_match('/^[aeiouyàâäéèêëîïôöùûü]/iu', $startMonthLabel) ? 'D’' : 'De ';
+
+        return $prefix . $startMonthLabel
+            . ' à ' . formatEvenementMonth($endDate);
+    }
+
+    if (empty($endDate) || $startDate === $endDate) {
+        return formatEvenementDate($startDate);
+    }
+
+    $sameYear = substr($startDate, 0, 4) === substr($endDate, 0, 4);
+    $startLabel = $sameYear
+        ? preg_replace('/ [0-9]{4}$/', '', formatEvenementDate($startDate))
+        : formatEvenementDate($startDate);
+
+    return 'Du ' . $startLabel . ' au ' . formatEvenementDate($endDate);
+}
+
 function evenementBaseSelect(string $where = ''): string {
     $mediaBaseUrl = app_url('media?id=');
 
@@ -51,6 +153,8 @@ function evenementBaseSelect(string $where = ''): string {
             e.title,
             e.description,
             e.event_date AS date,
+            e.event_end_date AS end_date,
+            e.date_precision,
             e.location AS meta,
             COALESCE((
                 SELECT m.id_media
@@ -102,6 +206,17 @@ function getEvenementsByYear(int $year): array {
     return $stmt->fetchAll();
 }
 
+function getUpcomingEvenements(): array {
+    global $pdo;
+
+    $stmt = $pdo->query(
+        evenementBaseSelect("WHERE COALESCE(e.event_end_date, e.event_date) >= CURDATE()")
+        . " ORDER BY e.event_date ASC, e.id_evenement ASC"
+    );
+
+    return $stmt->fetchAll();
+}
+
 function getEvenementYears(): array {
     global $pdo;
 
@@ -141,20 +256,23 @@ function addEvenement(array $data) {
     global $pdo;
 
     $authorId = $data['author_id'] ?? null;
+    $period = normalizeEvenementPeriod($data);
     $pdo->beginTransaction();
 
     try {
         $stmt = $pdo->prepare(
             "INSERT INTO evenements
-                (author_id, title, description, event_date, location)
+                (author_id, title, description, event_date, event_end_date, date_precision, location)
              VALUES
-                (?, ?, ?, ?, ?)"
+                (?, ?, ?, ?, ?, ?, ?)"
         );
         $stmt->execute([
             $authorId,
             $data['title'] ?? '',
             $data['description'] ?? '',
-            normalizeEvenementDate($data['date'] ?? null),
+            $period['date'],
+            $period['end_date'],
+            $period['date_precision'],
             $data['location'] ?? ($data['meta'] ?? ''),
         ]);
 
@@ -181,18 +299,21 @@ function updateEvenement(int $id, array $data) {
     global $pdo;
 
     $authorId = $data['author_id'] ?? null;
+    $period = normalizeEvenementPeriod($data);
     $pdo->beginTransaction();
 
     try {
         $stmt = $pdo->prepare(
             "UPDATE evenements
-             SET title = ?, description = ?, event_date = ?, location = ?
+             SET title = ?, description = ?, event_date = ?, event_end_date = ?, date_precision = ?, location = ?
              WHERE id_evenement = ?"
         );
         $stmt->execute([
             $data['title'] ?? '',
             $data['description'] ?? '',
-            normalizeEvenementDate($data['date'] ?? null),
+            $period['date'],
+            $period['end_date'],
+            $period['date_precision'],
             $data['location'] ?? ($data['meta'] ?? ''),
             $id,
         ]);

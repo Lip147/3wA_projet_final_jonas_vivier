@@ -85,6 +85,7 @@
                 <li>Éditrice du site : Annie Roger-Chamoulaud.</li>
                 <li>Les contenus, textes et images présentés sur ce site sont protégés par le droit d’auteur.</li>
                 <li>Les données transmises via le formulaire de contact sont utilisées uniquement pour répondre à votre demande.</li>
+                <li>Un identifiant réseau pseudonymisé est utilisé temporairement pour limiter les envois abusifs.</li>
                 <li>Conformément au RGPD et à la loi Informatique et Libertés, vous pouvez demander l’accès, la rectification ou la suppression de vos données.</li>
                 <li>Aucun cookie publicitaire ou traceur de mesure d’audience n’est déposé sans consentement préalable.</li>
             </ul>

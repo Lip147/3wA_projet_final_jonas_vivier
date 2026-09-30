@@ -211,6 +211,12 @@ function adminEvenements() {
 
 function adminAddEvenement(array $data) {
     requireAdmin();
+    try {
+        normalizeEvenementPeriod($data);
+    } catch (InvalidArgumentException $exception) {
+        $_SESSION['admin_error'] = $exception->getMessage();
+        redirect_to('admin/evenements');
+    }
     $data = adminHandleImageUploadOrRedirect($data, 'admin/evenements');
     $data['author_id'] = currentAdminId();
     addEvenement($data);
@@ -226,6 +232,12 @@ function adminDeleteEvenement(int $id) {
 function adminUpdateEvenement(array $data) {
     requireAdmin();
     $id = (int)($data['id'] ?? 0);
+    try {
+        normalizeEvenementPeriod($data);
+    } catch (InvalidArgumentException $exception) {
+        $_SESSION['admin_error'] = $exception->getMessage();
+        redirect_to($id > 0 ? 'admin/evenements?edit=' . $id : 'admin/evenements');
+    }
     $data = adminHandleImageUploadOrRedirect($data, $id > 0 ? 'admin/evenements?edit=' . $id : 'admin/evenements');
     $data['author_id'] = currentAdminId();
     if ($id) {

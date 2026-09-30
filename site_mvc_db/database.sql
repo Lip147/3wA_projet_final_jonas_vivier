@@ -92,6 +92,8 @@ CREATE TABLE evenements (
     title VARCHAR(255) NOT NULL,
     description TEXT,
     event_date DATE,
+    event_end_date DATE,
+    date_precision VARCHAR(10) NOT NULL DEFAULT 'day',
     location VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -175,14 +177,6 @@ INSERT INTO categories (name, slug, type, description) VALUES
 INSERT INTO peintures (author_id, title, description, creation_date, dimensions, technique) VALUES
 (NULL, 'Abstraction Rouge', 'Peinture rouge intense', '2026', '100x80 cm', ''),
 (NULL, 'Fusion Bleue', 'Art bleu fluide', '2026', '120x90 cm', '');
-
-INSERT INTO medias (file_path, original_name, extension, mime_type, alt_text, uploaded_by) VALUES
-('https://picsum.photos/500?1', 'picsum-1', 'jpg', 'image/jpeg', 'Abstraction Rouge', NULL),
-('https://picsum.photos/500?2', 'picsum-2', 'jpg', 'image/jpeg', 'Fusion Bleue', NULL);
-
-INSERT INTO peinture_media (id_peinture, id_media, is_main, sort_order) VALUES
-(1, 1, 1, 0),
-(2, 2, 1, 0);
 
 INSERT INTO peinture_categorie (id_peinture, id_categorie) VALUES
 (1, 1),
