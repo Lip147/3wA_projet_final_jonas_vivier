@@ -25,7 +25,6 @@
             top: var(--filter-sticky-offset);
             z-index: 5;
             min-height: 605px;
-            border-left: 1px solid rgba(255, 255, 255, 0.42);
             background: #000;
             color: #fff;
             padding: 2.8rem 1.8rem 2.2rem 2rem;
@@ -210,20 +209,22 @@
             text-decoration-color: currentColor;
         }
         .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(5, minmax(0, 1fr));
-            gap: 1px;
-            align-content: start;
+            display: block;
+            column-count: 5;
+            column-gap: 14px;
             box-sizing: border-box;
             padding-bottom: 2rem;
             background: #000;
         }
         .gallery-card {
             position: relative;
+            display: inline-block;
+            width: 100%;
+            margin: 0 0 14px;
             overflow: hidden;
+            break-inside: avoid;
             border-radius: 0;
             cursor: pointer;
-            aspect-ratio: 4 / 5;
             background: #050505;
             isolation: isolate;
         }
@@ -234,8 +235,8 @@
             position: relative;
             z-index: 1;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            object-fit: contain;
             display: block;
             border-radius: 0;
             filter: grayscale(18%) contrast(1.05);
@@ -359,7 +360,7 @@
         }
         @media (max-width: 1280px) {
             .gallery-grid {
-                grid-template-columns: repeat(4, minmax(0, 1fr));
+                column-count: 4;
             }
         }
         @media (max-width: 900px) {
@@ -382,7 +383,7 @@
                 justify-content: start;
             }
             .gallery-grid {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
+                column-count: 3;
                 padding-bottom: 2rem;
             }
             .lightbox-frame {
@@ -409,12 +410,12 @@
                 grid-template-columns: 1fr;
             }
             .gallery-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+                column-count: 2;
             }
         }
         @media (max-width: 540px) {
             .gallery-grid {
-                grid-template-columns: 1fr;
+                column-count: 1;
             }
         }
     </style>
